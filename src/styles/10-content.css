@@ -1,0 +1,122 @@
+/* ==========================================================================
+   10 · Content — data surfaces, prose, steps, FAQ, code, navigation aids
+   ========================================================================== */
+
+/* Stat strip — mono label, mono figure, tabular */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:var(--s6)}
+.stats div{display:grid;gap:var(--s1)}
+.stats b{font-family:var(--mono);font-weight:600;font-size:clamp(1.4rem,2.4vw,1.9rem);
+         letter-spacing:-.04em;line-height:1}
+.stats span{font-family:var(--mono);font-size:.6875rem;font-weight:500;
+            font-variation-settings:'wdth' 87.5;letter-spacing:.1em;
+            text-transform:uppercase;color:var(--text-3)}
+.stats--amber b{color:var(--signal)}
+
+/* Spec table — label / value */
+.spec{font-size:.9375rem}
+.spec th{text-align:left;vertical-align:top;width:34%;padding:var(--s3) var(--s4) var(--s3) 0;
+         border-bottom:1px solid var(--line-2);
+         font-family:var(--mono);font-size:.6875rem;font-weight:500;
+         font-variation-settings:'wdth' 87.5;letter-spacing:.1em;
+         text-transform:uppercase;color:var(--text-3)}
+.spec td{padding:var(--s3) 0;border-bottom:1px solid var(--line-2);color:var(--text-2)}
+.spec tr:last-child th,.spec tr:last-child td{border-bottom:0}
+
+.kv{display:grid;gap:var(--s4)}
+.kv div{display:grid;gap:2px}
+.kv b{font-family:var(--mono);font-size:.6875rem;font-weight:500;
+      font-variation-settings:'wdth' 87.5;letter-spacing:.1em;
+      text-transform:uppercase;color:var(--text-3)}
+.kv span{color:var(--text-2);font-size:.9375rem}
+
+/* Fact lists — the module is the bullet */
+.facts{list-style:none;margin:0;padding:0;display:grid;gap:var(--s3)}
+.facts li{position:relative;padding-left:var(--s6);color:var(--text-2);font-size:.9375rem}
+.facts li::before{content:'';position:absolute;left:0;top:.55em;
+                  width:9px;height:9px;border-radius:var(--r-mod);background:var(--signal-lo)}
+.facts--amber li::before{background:var(--signal-lo)}
+.facts--plain li{padding-left:0}
+.facts--plain li::before{display:none}
+
+/* Process timeline — numbered because the steps are an actual sequence */
+.steps{display:grid;gap:0;border-top:1px solid var(--line)}
+.step{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--s5);
+      padding:var(--s6) 0;border-bottom:1px solid var(--line)}
+.step-no{font-family:var(--mono);font-weight:600;font-size:1.5rem;letter-spacing:-.04em;
+         color:var(--signal);line-height:1}
+.step h3{margin-bottom:var(--s2)}
+.step p{color:var(--text-2);font-size:.9375rem;max-width:68ch}
+
+/* FAQ — native details, so it needs no JavaScript */
+.faq{border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{
+  display:flex;align-items:center;justify-content:space-between;gap:var(--s5);
+  padding:var(--s5) 0;cursor:pointer;list-style:none;
+  font-family:var(--display);font-weight:600;font-variation-settings:'wdth' 103;
+  font-size:1.0625rem;letter-spacing:-.015em;
+  transition:color var(--t-fast) var(--in);
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:'';flex:none;width:11px;height:11px;
+                    border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
+                    transform:rotate(45deg) translateY(-3px);
+                    transition:transform var(--t-mid) var(--in);color:var(--text-3)}
+.faq details[open] summary::after{transform:rotate(-135deg) translateY(-3px)}
+.faq summary:hover{color:var(--signal)}
+.faq .answer{padding-bottom:var(--s5);color:var(--text-2);max-width:68ch;font-size:.9375rem}
+
+/* Long-form prose */
+.prose{max-width:68ch}
+.prose>*+*{margin-top:var(--s5)}
+.prose h2{margin-top:var(--s9)}
+.prose h3{margin-top:var(--s7)}
+.prose p,.prose li{color:var(--text-2)}
+.prose ul,.prose ol{padding-left:var(--s6);display:grid;gap:var(--s2)}
+.prose strong{color:var(--text);font-weight:600}
+.prose a{color:var(--signal);border-bottom:1px solid var(--signal-soft)}
+.prose a:hover{border-color:var(--signal)}
+.prose blockquote{margin:0;padding-left:var(--s5);border-left:2px solid var(--signal);
+                  color:var(--text);font-size:1.0625rem}
+
+/* Sticky table of contents */
+.toc{position:sticky;top:calc(var(--header-h) + var(--s6));display:grid;gap:var(--s2);
+     align-content:start}
+.toc a{font-size:.875rem;color:var(--text-3);padding:var(--s1) 0;
+       border-left:1px solid var(--line);padding-left:var(--s4);
+       transition:color var(--t-fast) var(--in),border-color var(--t-fast) var(--in)}
+.toc a:hover{color:var(--signal);border-color:var(--signal)}
+
+/* Code */
+.code{border:1px solid var(--line);border-radius:var(--r-2);background:var(--surface);
+      overflow:hidden}
+.code-bar{display:flex;align-items:center;justify-content:space-between;gap:var(--s4);
+          padding:var(--s3) var(--s4);border-bottom:1px solid var(--line);background:var(--bg-2)}
+.copy-btn{font-family:var(--mono);font-size:.6875rem;font-variation-settings:'wdth' 87.5;
+          letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);
+          cursor:pointer;padding:var(--s1) var(--s2);border-radius:var(--r-1)}
+.copy-btn:hover{color:var(--signal);background:var(--signal-soft)}
+.code pre{margin:0;padding:var(--s4);overflow-x:auto}
+.code code{font-family:var(--mono);font-size:.8125rem;line-height:1.7;color:var(--text-2);
+           font-variation-settings:'wdth' 87.5}
+
+/* Breadcrumb and pager */
+.breadcrumb{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s2);
+            font-family:var(--mono);font-size:.6875rem;font-variation-settings:'wdth' 87.5;
+            letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);
+            margin-bottom:var(--s5)}
+.breadcrumb a:hover{color:var(--signal)}
+
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:var(--gutter);
+       padding-top:var(--s6);border-top:1px solid var(--line)}
+.pager a{display:grid;gap:var(--s2);padding:var(--s4);border:1px solid var(--line);
+         border-radius:var(--r-2);transition:border-color var(--t-fast) var(--in)}
+.pager a:hover{border-color:var(--signal)}
+.pager .next{text-align:right}
+
+@media (max-width:900px){
+  .step{grid-template-columns:1fr;gap:var(--s3)}
+  .pager{grid-template-columns:1fr}
+  .pager .next{text-align:left}
+  .toc{position:static}
+}

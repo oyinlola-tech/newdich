@@ -1,0 +1,22 @@
+/* ==========================================================================
+   13 · Motion                                     design.md — Elevation & Depth
+   Only transform and opacity animate. The OS setting wins.
+   ========================================================================== */
+[data-reveal]{opacity:0;transform:translateY(6px)}
+html:not(.js) [data-reveal]{opacity:1;transform:none}
+[data-reveal].is-in{opacity:1;transform:none;
+  transition:opacity var(--t-slow) var(--in),transform var(--t-slow) var(--in)}
+
+/* A running status pulses. A held one does not — it is waiting, not working.
+   With no colour to separate them, the movement carries the difference. */
+.pill--live .dot{animation:pulse 2.4s var(--out) infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;scroll-behavior:auto!important;
+  }
+  [data-reveal]{opacity:1;transform:none}
+}

@@ -1,0 +1,61 @@
+/* ==========================================================================
+   06 · Buttons                                        design.md — Components
+   Solid (one per view), line, ghost. 44px min, no gradient, no shadow.
+   ========================================================================== */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:var(--s2);
+  min-height:44px;padding:0 18px;
+  font-family:var(--body);font-size:.9375rem;font-weight:600;
+  border-radius:var(--r-1);border:1px solid transparent;
+  cursor:pointer;white-space:nowrap;
+  transition:background var(--t-fast) var(--in),border-color var(--t-fast) var(--in),
+             color var(--t-fast) var(--in),transform var(--t-fast) var(--in);
+}
+.btn svg{width:15px;height:15px;transition:transform var(--t-fast) var(--in)}
+.btn:hover svg{transform:translateX(3px)}
+.btn:active{transform:translateY(1px)}
+
+.btn--solid{background:var(--signal);color:var(--signal-ink);border-color:var(--signal)}
+.btn--solid:hover{background:var(--signal-2);border-color:var(--signal-2)}
+
+.btn--line{border-color:var(--line);color:var(--text);background:transparent}
+.btn--line:hover{border-color:var(--signal);color:var(--signal);background:var(--signal-soft)}
+
+.btn--ghost{color:var(--text-2);background:transparent}
+.btn--ghost:hover{color:var(--text);background:var(--raised)}
+
+/* The Institute used to have a colour of its own. With three colours there
+   is none to spare, so it uses the same blue as everything else. */
+.btn--amber{background:var(--signal);color:var(--signal-ink);border-color:var(--signal)}
+.btn--amber:hover{background:var(--signal-2);border-color:var(--signal-2)}
+
+.btn--sm{min-height:38px;padding:0 14px;font-size:.875rem}
+.btn--block{width:100%}
+
+.btns{display:flex;flex-wrap:wrap;gap:var(--s3)}
+
+.icon-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:44px;height:44px;border-radius:var(--r-1);
+  border:1px solid var(--line);color:var(--text-2);cursor:pointer;
+  transition:color var(--t-fast) var(--in),border-color var(--t-fast) var(--in),
+             background var(--t-fast) var(--in);
+}
+.icon-btn svg{width:18px;height:18px}
+.icon-btn:hover{color:var(--text);border-color:var(--signal);background:var(--signal-soft)}
+
+/* Chips and pills — mono, for sector tags and status */
+.pill,.chip{
+  display:inline-flex;align-items:center;gap:var(--s2);
+  padding:4px 9px;border-radius:var(--r-1);
+  border:1px solid var(--line);background:var(--raised);
+  font-family:var(--mono);font-size:.6875rem;font-weight:500;
+  font-variation-settings:'wdth' 87.5;letter-spacing:.06em;
+  color:var(--text-2);white-space:nowrap;
+}
+.pill--accent{color:var(--signal);border-color:var(--signal-line);background:var(--signal-soft)}
+/* Running reads as a solid blue mark on a blue-tinted chip; held reads as a
+   hollow mark on the plain surface. Same two colours, different form. */
+.pill--live{color:var(--signal);border-color:var(--signal-line);background:var(--signal-soft)}
+.pill--held{color:var(--text-3);border-color:var(--line);background:transparent}
+.pills{display:flex;flex-wrap:wrap;gap:var(--s2)}

@@ -1,0 +1,50 @@
+/* ==========================================================================
+   08 · Index                                              design.md — Layout
+   A list of twelve things is an index, not twelve cards: full-width
+   hairline-ruled rows with a left identifier column.
+   ========================================================================== */
+.index{display:grid;border-top:1px solid var(--line)}
+
+.index-row{
+  display:grid;
+  grid-template-columns:minmax(120px,1.2fr) minmax(0,5fr) auto;
+  gap:var(--s4) var(--s6);align-items:baseline;
+  padding:var(--s5) var(--s3);
+  border-bottom:1px solid var(--line);
+  transition:background var(--t-fast) var(--in),padding var(--t-fast) var(--in);
+}
+a.index-row:hover{background:var(--raised);padding-left:var(--s5)}
+a.index-row:hover .index-title{color:var(--signal)}
+
+.index-id{display:flex;align-items:center;gap:var(--s3);align-self:start;padding-top:3px}
+.index-main{min-width:0;display:grid;gap:var(--s2)}
+.index-title{font-family:var(--display);font-weight:700;font-variation-settings:'wdth' 105;
+             font-size:1.125rem;letter-spacing:-.02em;line-height:1.2;
+             transition:color var(--t-fast) var(--in)}
+.index-note{color:var(--text-2);font-size:.9375rem;max-width:62ch}
+.index-aside{align-self:center;justify-self:end;text-align:right;
+             display:flex;align-items:center;gap:var(--s4)}
+
+/* The older `rows` construction, same shape */
+.rows{display:grid;border-top:1px solid var(--line)}
+.row{
+  display:grid;grid-template-columns:minmax(120px,1.2fr) minmax(0,5fr) auto;
+  gap:var(--s4) var(--s6);align-items:baseline;
+  padding:var(--s5) var(--s3);border-bottom:1px solid var(--line);
+  transition:background var(--t-fast) var(--in),padding var(--t-fast) var(--in);
+}
+a.row:hover{background:var(--raised);padding-left:var(--s5)}
+a.row:hover .row-title{color:var(--signal)}
+.row-id{display:flex;align-items:center;gap:var(--s3);align-self:start;padding-top:3px}
+.row-main{min-width:0;display:grid;gap:var(--s2)}
+.row-title{font-family:var(--display);font-weight:700;font-variation-settings:'wdth' 105;
+           font-size:1.125rem;letter-spacing:-.02em;line-height:1.2;
+           transition:color var(--t-fast) var(--in)}
+.row-note{color:var(--text-2);font-size:.9375rem;max-width:62ch}
+.row-aside{align-self:center;justify-self:end;text-align:right}
+
+@media (max-width:900px){
+  .index-row,.row{grid-template-columns:minmax(0,1fr);gap:var(--s3);padding-inline:0}
+  a.index-row:hover,a.row:hover{padding-left:var(--s2)}
+  .index-aside,.row-aside{justify-self:start;text-align:left}
+}

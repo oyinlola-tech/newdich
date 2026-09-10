@@ -1,0 +1,77 @@
+/* ==========================================================================
+   04 · Layout                                              design.md — Layout
+   1280px, asymmetric racks, and a page gutter so panels read as equipment
+   set on a surface rather than as full-width bands of a web page.
+   ========================================================================== */
+.wrap{width:min(100% - var(--gutter) * 2,var(--page));margin-inline:auto}
+.wrap--narrow{width:min(100% - var(--gutter) * 2,900px)}
+
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--s8) var(--gutter)}
+
+/* `grid-column: span N` alone sets the START to "span N" and leaves the end
+   auto, so a later `grid-column-start` wipes the span out. Declare both. */
+.span-3{grid-column:span 3 / span 3}
+.span-4{grid-column:span 4 / span 4}
+.span-5{grid-column:span 5 / span 5}
+.span-6{grid-column:span 6 / span 6}
+.span-7{grid-column:span 7 / span 7}
+.span-8{grid-column:span 8 / span 8}
+.span-9{grid-column:span 9 / span 9}
+.span-12{grid-column:span 12 / span 12}
+.start-6{grid-column-start:6}
+.start-7{grid-column-start:7}
+.start-8{grid-column-start:8}
+.start-9{grid-column-start:9}
+.start-10{grid-column-start:10}
+
+/* The rack — how panels sit together. 8/4, 4/8, or full. Never 3 equal. */
+.rack{display:grid;gap:var(--gutter);grid-template-columns:repeat(12,minmax(0,1fr))}
+.rack>*{grid-column:span 12 / span 12}
+.rack--2>*{grid-column:span 6 / span 6}
+.rack--8-4>*:nth-child(odd){grid-column:span 8 / span 8}
+.rack--8-4>*:nth-child(even){grid-column:span 4 / span 4}
+.rack--4-8>*:nth-child(odd){grid-column:span 4 / span 4}
+.rack--4-8>*:nth-child(even){grid-column:span 8 / span 8}
+
+.section{padding-block:clamp(44px,5.5vw,76px);position:relative}
+.section--sm{padding-block:var(--s8)}
+.section--flush-top{padding-top:0}
+.section--flush-bottom{padding-bottom:0}
+
+/* An alternate ground so the page has rhythm without a border on everything */
+.section--alt{background:var(--bg-2);border-block:1px solid var(--line-2)}
+
+/* The one gradient — the instrument backlight */
+.section--wash::before{content:'';position:absolute;inset:0;background:var(--backlight);
+                       pointer-events:none;z-index:0}
+.section--wash>*{position:relative;z-index:1}
+
+.section-head{
+  display:grid;grid-template-columns:repeat(12,minmax(0,1fr));
+  gap:var(--s5) var(--gutter);align-items:end;margin-bottom:var(--s7);
+}
+.section-head h2{grid-column:span 7 / span 7}
+.section-head .copy{grid-column:9 / span 4;font-size:.9375rem}
+.section-head--center{display:block;text-align:center;max-width:62ch;margin-inline:auto}
+
+.divider{height:1px;background:var(--line);border:0}
+
+/* A row of quick facts under a hero */
+.meta-row{display:flex;flex-wrap:wrap;gap:var(--s6) var(--s8);
+          padding-top:var(--s6);border-top:1px solid var(--line)}
+.meta-row div{display:grid;gap:2px}
+.meta-row b{font-family:var(--mono);font-size:1.0625rem;font-weight:600;letter-spacing:-.03em}
+
+@media (max-width:900px){
+  .grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--s7) var(--gutter)}
+  /* Reset the start BEFORE the span. `grid-column:1 / -1` sets both edges;
+     a later `grid-column-start:auto` re-opens the start and leaves end at -1,
+     which collapses the item to a sliver against the last column. */
+  .start-6,.start-7,.start-8,.start-9,.start-10{grid-column-start:auto}
+  .span-3,.span-4,.span-5,.span-6,.span-7,.span-8,.span-9,.span-12{grid-column:1 / -1}
+  .rack>*,.rack--2>*,
+  .rack--8-4>*:nth-child(odd),.rack--8-4>*:nth-child(even),
+  .rack--4-8>*:nth-child(odd),.rack--4-8>*:nth-child(even){grid-column:1 / -1}
+  .section-head{display:block;margin-bottom:var(--s7)}
+  .section-head .copy{margin-top:var(--s4)}
+}

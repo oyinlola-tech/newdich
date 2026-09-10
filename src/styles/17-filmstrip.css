@@ -1,0 +1,194 @@
+/* ==========================================================================
+   17 · Filmstrip                                          design.md — Gallery
+
+   An editorial character-card strip, after ThreeUI's character carousel.
+   Cards share a height and take their width from the photograph's own aspect
+   ratio, so a portrait and a landscape sit on the same rail without either
+   being cropped to match the other.
+
+   It never advances on its own. Every input — pointer, wheel, keyboard, card
+   focus — is a person moving it.
+   ========================================================================== */
+.film {
+  border: 1px solid var(--line);
+  border-radius: var(--r-3);
+  background: var(--surface);
+  box-shadow: var(--lift);
+  overflow: hidden;
+}
+
+.film-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s4);
+  padding: var(--s3) var(--s4) var(--s3) var(--s5);
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-2);
+}
+
+.film-controls {
+  display: flex;
+  gap: var(--s2);
+  flex: none
+}
+
+.film-controls .icon-btn {
+  width: 38px;
+  height: 38px
+}
+
+.film-controls .icon-btn:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+  border-color: var(--line);
+  color: var(--text-3);
+  background: transparent;
+}
+
+/* --- the rail ------------------------------------------------------------- */
+.film-rail {
+  list-style: none;
+  margin: 0;
+  padding: var(--s5);
+  display: flex;
+  gap: var(--s4);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  background: var(--bg);
+  cursor: grab;
+  /* The strip is a scroller, so it keeps its scrollbar — a horizontal list
+     with no visible way to scroll is a list that hides half of itself. */
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+.film-rail:active {
+  cursor: grabbing
+}
+
+.film-rail::-webkit-scrollbar {
+  height: 8px
+}
+
+.film-rail::-webkit-scrollbar-track {
+  background: transparent
+}
+
+.film-rail::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 99px
+}
+
+.film-rail::-webkit-scrollbar-thumb:hover {
+  background: var(--text-3)
+}
+
+.film-rail:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: -2px
+}
+
+/* --- the card ------------------------------------------------------------- */
+.film-card {
+  flex: none;
+  scroll-snap-align: start;
+  width: calc(var(--film-h) * var(--ar));
+  max-width: 78vw;
+  --film-h: clamp(240px, 32vw, 380px);
+}
+
+.film-card figure {
+  margin: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-2);
+  overflow: hidden;
+  transition: border-color var(--t-fast) var(--in), transform var(--t-fast) var(--in);
+}
+
+.film-card:hover figure {
+  border-color: var(--signal);
+  transform: translateY(-1px)
+}
+
+.film-shot {
+  display: block;
+  height: var(--film-h);
+  background: var(--bg-2);
+  overflow: hidden;
+}
+
+.film-shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.film-cap {
+  display: grid;
+  gap: 2px;
+  padding: var(--s3) var(--s4) var(--s4);
+  border-top: 1px solid var(--line-2);
+}
+
+.film-cap b {
+  font-family: var(--display);
+  font-weight: 700;
+  font-variation-settings: 'wdth' 105;
+  font-size: .9375rem;
+  letter-spacing: -.015em;
+  line-height: 1.25;
+}
+
+.film-cap>span {
+  font-size: .8125rem;
+  color: var(--text-2)
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width:900px) {
+  .film-rail {
+    padding: var(--s4);
+    gap: var(--s3)
+  }
+
+  .film-card {
+    --film-h: clamp(210px, 52vw, 300px);
+    max-width: 82vw
+  }
+
+  .film-bar {
+    padding: var(--s3) var(--s3) var(--s3) var(--s4)
+  }
+}
+
+@media (max-width:560px) {
+  .film-card {
+    --film-h: 230px;
+    max-width: 86vw
+  }
+
+  .film-cap {
+    padding: var(--s2) var(--s3) var(--s3)
+  }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .film-rail {
+    scroll-behavior: auto
+  }
+
+  .film-card:hover figure {
+    transform: none
+  }
+}

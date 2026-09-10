@@ -1,0 +1,236 @@
+/* ==========================================================================
+   05 · Navigation                                     design.md — Navigation
+
+   The rail is a fitted instrument bezel, not a browser chrome band: inset
+   from the viewport by the page gutter, hairline bordered, radiused at the
+   bottom corners, and condensed once the page has moved.
+
+   Four of navbar.gallery's nine patterns earn a place — sticky rail, mega
+   panel, full-screen drawer, breadcrumbs. The announcement bar is
+   promotional, and search over fourteen routes is a box that answers
+   questions nobody asked.
+   ========================================================================== */
+
+.railwrap{
+  position:sticky;top:0;z-index:var(--z-nav);
+  padding-inline:var(--gutter);
+  /* The ground shows above the rail so it reads as equipment set on a
+     surface, which is the same argument the page gutter makes. */
+  padding-top:var(--s2);
+  pointer-events:none;
+}
+.railwrap>*{pointer-events:auto}
+
+.rail{
+  width:min(100%,var(--page));margin-inline:auto;
+  display:flex;align-items:center;gap:var(--s5);
+  height:var(--header-h);padding-inline:var(--s4) var(--s3);
+  border:1px solid transparent;border-radius:0 0 var(--r-3) var(--r-3);
+  transition:height var(--t-mid) var(--in),background var(--t-mid) var(--in),
+             border-color var(--t-mid) var(--in),box-shadow var(--t-mid) var(--in);
+}
+
+/* Scrolled: the rail acquires its fill, its hairline and a blur behind it.
+   Nothing reflows — only height, colour and opacity move. */
+.railwrap[data-scrolled='true'] .rail{
+  height:56px;
+  background:color-mix(in srgb,var(--surface) 88%,transparent);
+  border-color:var(--line);
+  box-shadow:var(--lift);
+  backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+}
+@media (max-width:900px){ .railwrap[data-scrolled='true'] .rail{height:52px} }
+
+/* --- brand ---------------------------------------------------------------- */
+/* The brand shrinks before anything else does. Without this it sizes to its
+   own nowrap width and pushes the controls off a 390px screen. */
+.brand{display:flex;align-items:center;gap:var(--s3);min-width:0;flex:0 1 auto}
+.brand svg{width:30px;height:30px;border-radius:8px;flex:none}
+.brand-text{display:grid;line-height:1.15;min-width:0}
+.brand-text b,.brand-text em{overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.brand-text b{
+  font-family:var(--display);font-weight:700;font-variation-settings:'wdth' 108;
+  font-size:.9375rem;letter-spacing:-.02em;white-space:nowrap;
+}
+/* The caption drops out on condense — the mark carries the identity once a
+   visitor is already inside the site. */
+.brand-text em{
+  font-family:var(--mono);font-style:normal;font-size:.5625rem;font-weight:500;
+  font-variation-settings:'wdth' 87.5;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-3);white-space:nowrap;
+  transition:opacity var(--t-mid) var(--in),max-height var(--t-mid) var(--in);
+  max-height:1.4em;
+}
+.railwrap[data-scrolled='true'] .brand-text em{opacity:0;max-height:0}
+
+/* --- the link row --------------------------------------------------------- */
+/* The item runs the full height of the rail, not the height of its own link,
+   so the active underline can sit on the rail's bottom edge in both the rest
+   and condensed states rather than at a fixed offset that is only right in
+   one of them. */
+.nav{display:flex;align-items:stretch;align-self:stretch;gap:var(--s1);margin-left:var(--s6)}
+.nav-item{position:relative;display:flex;align-items:center}
+.nav-link{
+  position:relative;
+  display:inline-flex;align-items:center;gap:6px;
+  height:38px;padding:0 var(--s3);
+  font-size:.9375rem;font-weight:500;color:var(--text-2);
+  border-radius:var(--r-1);cursor:pointer;white-space:nowrap;
+  transition:color var(--t-fast) var(--in),background var(--t-fast) var(--in);
+}
+.nav-link:hover{color:var(--text);background:var(--raised)}
+.nav-link svg{width:13px;height:13px;color:var(--text-3);
+              transition:transform var(--t-mid) var(--in)}
+.nav-link[aria-expanded='true']{color:var(--text);background:var(--raised)}
+.nav-link[aria-expanded='true'] svg{transform:rotate(180deg)}
+
+/* The active page is underlined on the rail's own bottom edge. A pill would
+   migrate a button's affordance onto a link. */
+.nav-link[aria-current='page']{color:var(--text)}
+.nav-link[aria-current='page']::after{
+  content:'';position:absolute;left:var(--s3);right:var(--s3);bottom:0;
+  height:2px;border-radius:1px 1px 0 0;background:var(--signal);
+}
+
+/* --- the rail's own reading ----------------------------------------------- */
+.rail-read{
+  margin-left:auto;display:flex;align-items:center;gap:var(--s3);
+  padding-right:var(--s2);
+}
+.rail-read .label{white-space:nowrap}
+@media (max-width:1180px){ .rail-read .label{display:none} }
+
+.rail-acts{display:flex;align-items:center;gap:var(--s2);flex:none}
+.rail-acts .icon-btn{width:38px;height:38px}
+.rail-acts .icon-btn svg{width:16px;height:16px}
+.theme-btn .sun{display:none}
+:root[data-theme='light'] .theme-btn .moon,
+:root[data-theme='light'] .theme-btn .sun{display:none}
+:root[data-theme='light'] .theme-btn .sun{display:block}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme='dark']) .theme-btn .moon{display:none}
+  :root:not([data-theme='dark']) .theme-btn .sun{display:block}
+}
+
+/* --- the mega panel ------------------------------------------------------- */
+.mega{
+  position:absolute;top:calc(100% + 10px);left:calc(var(--s3) * -1);
+  z-index:var(--z-mega);
+  width:min(620px,calc(100vw - var(--gutter) * 4));
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-3);
+  box-shadow:var(--lift);padding:var(--s3);
+  opacity:0;visibility:hidden;transform:translateY(-6px);
+  transition:opacity var(--t-mid) var(--in),transform var(--t-mid) var(--in),
+             visibility var(--t-mid) var(--in);
+}
+.mega--right{left:auto;right:calc(var(--s3) * -1)}
+
+/* The panel sits 10px below the trigger, which on a hover-opened menu is a
+   dead strip the cursor falls through on its way down. Bridge it with a
+   transparent lead-in rather than closing the gap — the gap is what makes the
+   panel read as a separate piece of equipment. */
+.mega::before{
+  content:'';position:absolute;left:0;right:0;top:-12px;height:12px;
+}
+.mega[data-open='true']{opacity:1;visibility:visible;transform:none}
+
+/* Rows, not tiles: the index structure at small scale. */
+.mega-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.mega-link{
+  display:flex;align-items:flex-start;gap:var(--s3);
+  padding:var(--s3);border-radius:var(--r-2);
+  transition:background var(--t-fast) var(--in);
+}
+.mega-link:hover{background:var(--raised)}
+.mega-link .glyph{margin-top:3px}
+.mega-link span{display:grid;gap:2px;min-width:0}
+.mega-link b{font-size:.9375rem;font-weight:600;letter-spacing:-.01em}
+.mega-link span span{font-size:.8125rem;color:var(--text-3);line-height:1.45}
+.mega-link:hover b{color:var(--signal)}
+
+.mega-foot{
+  display:flex;align-items:center;justify-content:space-between;gap:var(--s4);
+  margin-top:var(--s2);padding:var(--s3) var(--s3) var(--s2);
+  border-top:1px solid var(--line-2);
+}
+
+/* --- the drawer trigger --------------------------------------------------- */
+.burger{display:none}
+
+/* --------------------------------------------------------------------------
+   The full-screen drawer. A hamburger that opens a 280px column is a
+   phone-sized version of a desktop menu; a full-screen panel is a
+   phone-shaped menu.
+   -------------------------------------------------------------------------- */
+.drawer{
+  position:fixed;inset:0;z-index:var(--z-drawer);
+  background:var(--bg);
+  display:grid;grid-template-rows:auto minmax(0,1fr) auto;
+  opacity:0;visibility:hidden;transform:translateY(8px);
+  transition:opacity var(--t-mid) var(--in),transform var(--t-mid) var(--in),
+             visibility var(--t-mid) var(--in);
+}
+.drawer[data-open='true']{opacity:1;visibility:visible;transform:none}
+.drawer-bar{
+  display:flex;align-items:center;justify-content:space-between;gap:var(--s4);
+  height:var(--header-h);padding-inline:var(--gutter);
+  border-bottom:1px solid var(--line);
+}
+.drawer-body{overflow-y:auto;padding:var(--s5) var(--gutter) var(--s8)}
+.drawer-group{border-bottom:1px solid var(--line);padding-block:var(--s5)}
+.drawer-group:first-child{padding-top:0}
+.drawer-group>.label{margin-bottom:var(--s4)}
+.drawer-links{display:grid;gap:2px}
+.drawer-link{
+  display:flex;align-items:center;gap:var(--s3);
+  min-height:44px;padding:var(--s2) var(--s3);margin-inline:calc(var(--s3) * -1);
+  border-radius:var(--r-2);font-size:1rem;font-weight:500;
+}
+.drawer-link:hover,.drawer-link:focus-visible{background:var(--raised)}
+.drawer-link[aria-current='page']{color:var(--signal)}
+.drawer-foot{
+  display:grid;gap:var(--s3);padding:var(--s5) var(--gutter);
+  border-top:1px solid var(--line);background:var(--bg-2);
+}
+
+/* --------------------------------------------------------------------------
+   Breadcrumbs — the only place a route is spelled out in the UI.
+   -------------------------------------------------------------------------- */
+.crumbs{
+  display:flex;flex-wrap:wrap;align-items:center;gap:var(--s2);
+  font-family:var(--mono);font-size:.6875rem;font-weight:500;
+  font-variation-settings:'wdth' 87.5;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--text-3);margin-bottom:var(--s5);
+}
+.crumbs a{transition:color var(--t-fast) var(--in)}
+.crumbs a:hover{color:var(--signal)}
+.crumbs [aria-current='page']{color:var(--text-2)}
+
+@media (max-width:1024px){
+  .nav,.rail-read{display:none}
+  .burger{display:inline-flex}
+  .rail{gap:var(--s4)}
+  .rail-acts{margin-left:auto;flex:none}
+}
+
+/* On a phone the mark carries the identity and the caption is spending width
+   the controls need. */
+@media (max-width:560px){
+  .rail{gap:var(--s3);padding-inline:var(--s3) var(--s2)}
+  .brand-text em{display:none}
+  .brand-text b{font-size:.875rem}
+  .rail-acts{gap:var(--s1)}
+  .rail-acts .icon-btn{width:40px;height:40px}
+}
+
+/* With JavaScript off the drawer cannot open and a menu cannot expand, so the
+   rail swaps each menu trigger for the real link behind it and the footer
+   sitemap carries the rest. design.md asks for every page to be complete with
+   JavaScript off; it does not ask for a menu to expand without it. */
+.nav-link--nojs{display:none}
+html:not(.js) .burger{display:none}
+html:not(.js) .nav{display:flex;flex-wrap:wrap;margin-left:var(--s4)}
+html:not(.js) .nav-link--js{display:none}
+html:not(.js) .nav-link--nojs{display:inline-flex}
+html:not(.js) .mega,html:not(.js) .drawer{display:none}

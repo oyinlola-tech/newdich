@@ -1,0 +1,258 @@
+/* ==========================================================================
+   14 · Hero                                                  design.md — Hero
+
+   Large type, a UI mockup, and visible borders — the three structural moves
+   Unsection's hero taxonomy actually distinguishes between, as opposed to the
+   aesthetic tags most galleries stop at.
+
+   Composition is an editorial stack rather than a split: the statement runs
+   the full page at true hero scale, a ruled rail states the figures under it,
+   and the running instrument sits beneath as a shelf spanning the page. An
+   instrument panel is wide, so the argument is read as one — a rack front,
+   not a sidebar.
+   ========================================================================== */
+.hero{
+  position:relative;isolation:isolate;overflow:clip;
+  padding-block:clamp(44px,6.5vw,88px) clamp(40px,5vw,72px);
+}
+
+/* The arc — a dot-matrix arc of the mark's module. Opacity falloff only: no
+   glow, no blur, no second hue. This is the one place that effect is allowed. */
+.hero-arc{
+  /* The arc is geometry, not a background: in a tall hero a full-height
+     canvas puts its centre so far below the panel that the whole ring lands
+     off-canvas. Cap it to the band the statement occupies. */
+  position:absolute;left:0;right:0;top:0;z-index:-1;
+  width:100%;height:min(100%,720px);pointer-events:none;
+  -webkit-mask-image:linear-gradient(180deg,transparent 30%,#000 58%,#000 86%,transparent 100%);
+          mask-image:linear-gradient(180deg,transparent 30%,#000 58%,#000 86%,transparent 100%);
+}
+
+/* --- 1 · the state chip -------------------------------------------------- */
+/* It carries a sentence of current state rather than a tag, so it wraps
+   instead of running off the gutter. design.md asks for no horizontal
+   overflow at any width, and 390px is a width. */
+/* The first-screen wrapper is a box only on a phone. Above 900px it is not in
+   the box tree at all, so the desktop stack lays out exactly as if it were
+   not there. */
+.hero-view{display:contents}
+
+.hero-chip{margin-bottom:var(--s6)}
+/* The chip carries a sentence, so it has to wrap. `display:flex` rather than
+   the inline-flex the pill ships with, so it is constrained by the gutter
+   instead of sizing to its own max-content and running off the screen. */
+.hero-chip .pill,.hero-chip .chip{
+  display:flex;width:fit-content;max-width:100%;
+  white-space:normal;text-align:left;line-height:1.5;
+  align-items:flex-start;
+}
+.hero-chip .pill .dot{margin-top:.4em}
+
+/* --- 2 · the statement --------------------------------------------------- */
+/* Set across the page rather than in a seven-column well: on a page whose job
+   is one sentence, the sentence is the design. */
+.hero--stack .display-hero{
+  font-size:clamp(2.9rem,8.4vw,7.5rem);
+  letter-spacing:-.045em;line-height:.9;
+  max-width:16ch;
+}
+
+/* --- 3 · the lead rail --------------------------------------------------- */
+/* The lede and the actions share one ruled rail: 7/4, closed at the baseline,
+   so the sentence has something to sit on instead of floating. */
+.hero-lead{
+  display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);
+  gap:var(--s6) var(--gutter);align-items:end;
+  margin-top:clamp(24px,3vw,40px);padding-top:var(--s6);
+  border-top:1px solid var(--line);
+}
+.hero-lead .lede{font-size:1.0625rem;max-width:56ch;margin:0}
+.hero-lead .btns{justify-content:flex-start}
+
+/* --- 4 · the figure rail ------------------------------------------------- */
+/* Four figures, each traceable to a fact about the company, divided by the
+   hairline rather than by space — the visible-border move, used where it
+   carries information. */
+.hero-rail{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:var(--s5) 0;
+  margin-top:clamp(24px,3vw,40px);padding-top:var(--s5);
+  border-top:1px solid var(--line);
+}
+.hero-rail>div{
+  display:grid;gap:3px;align-content:start;
+  padding-inline:var(--s5);border-left:1px solid var(--line);
+}
+.hero-rail>div:first-child{padding-left:0;border-left:0}
+.hero-rail b{
+  font-family:var(--mono);font-weight:600;
+  font-size:clamp(1.25rem,2.2vw,1.75rem);
+  letter-spacing:-.04em;line-height:1;
+}
+
+/* --- 5 · the instrument shelf -------------------------------------------- */
+.hero-shelf{margin-top:clamp(28px,3.6vw,52px)}
+
+/* --------------------------------------------------------------------------
+   The shelf — four systems across the page, hairline-divided, like the front
+   of an equipment rack. Same components and the same hairlines as every other
+   panel on the site; only the shelf changed.
+   -------------------------------------------------------------------------- */
+.console--shelf .console-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.console--shelf .console-grid>.panel{
+  border-right:1px solid var(--line);border-bottom:0;
+  padding:var(--s5) var(--s5) var(--s6);
+}
+.console--shelf .console-grid>.panel:last-child{border-right:0}
+
+/* Four readouts side by side is a lot of horizontal run, so each states its
+   figure at a size that still reads as a readout and spends nothing on air.
+   Nothing is hidden — a shelf that drops a panel to fit is a shelf that lies. */
+.console--shelf .reading{font-size:clamp(1.375rem,1.9vw,1.75rem)}
+.console--shelf .spark{height:30px;margin:var(--s3) 0}
+.console--shelf .queue{gap:2px;margin-top:var(--s3)}
+.console--shelf .queue-row{padding:var(--s1) var(--s3);font-size:.78125rem}
+.console--shelf .receipt{gap:var(--s2);margin-top:var(--s3);font-size:.78125rem}
+.console--shelf .ledger{margin-top:var(--s3)}
+.console--shelf .ledger th{padding-bottom:var(--s1);font-size:.5625rem}
+.console--shelf .ledger td{padding:5px 0;font-size:.6875rem}
+.console--shelf .panel-head{margin-bottom:var(--s3);flex-wrap:wrap;gap:var(--s2)}
+
+/* The vertical variant, for any panel that has to report in a narrow column. */
+.console--rack .console-grid{grid-template-columns:minmax(0,1fr)}
+.console--rack .console-grid>.panel{
+  border-right:0;border-bottom:1px solid var(--line);padding:var(--s4) var(--s5);
+}
+.console--rack .console-grid>.panel:last-child{border-bottom:0}
+.console--rack .reading{font-size:1.5rem}
+.console--rack .spark{height:26px;margin:var(--s2) 0}
+
+/* --------------------------------------------------------------------------
+   The page hero — every route that is not the home page.
+   -------------------------------------------------------------------------- */
+.pagehero{padding-block:clamp(36px,4.5vw,64px) 0}
+.pagehero .display-xl{margin-bottom:var(--s4);max-width:20ch}
+.pagehero .lede{margin-bottom:var(--s6)}
+.hero-instrument{margin-top:var(--s7)}
+
+/* --------------------------------------------------------------------------
+   Responsive. The shelf steps 4 → 2 → 1 rather than shrinking a readout past
+   the width at which it reads as instrument legend.
+   -------------------------------------------------------------------------- */
+@media (max-width:1080px){
+  .console--shelf .console-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .console--shelf .console-grid>.panel:nth-child(2n){border-right:0}
+  .console--shelf .console-grid>.panel:nth-child(-n+2){border-bottom:1px solid var(--line)}
+}
+
+/* --------------------------------------------------------------------------
+   The phone's hero — design.md, Hero.
+
+   A different composition, not the desktop one squeezed. The desktop hero is
+   a statement with an instrument shelf under it; the phone hero is a single
+   screen carrying the chip, the statement, the lede, both actions and the
+   four figures — and it fills that screen with those, rather than with space
+   between them.
+
+   That distinction is the whole point. A block that centres a short stack in a
+   tall box, or spreads it with `space-between`, is a screen mostly made of
+   nothing. Bringing the figure rail up into the first screen is what makes the
+   screen full of content; the gaps are then just the rhythm between real
+   things.
+
+   100dvh rather than 100vh, so the block is measured against the viewport the
+   browser is actually showing instead of the one it has when the address bar
+   is hidden.
+   -------------------------------------------------------------------------- */
+@media (max-width:900px){
+  .hero{padding-top:var(--s4);padding-bottom:var(--s7)}
+
+  .hero-view{
+    /* The rail is sticky and in flow, so the screen it leaves is the viewport
+       less the rail, its own top inset, and the hero's top padding. */
+    display:flex;flex-direction:column;
+    /* The last figure's label closes a hair above the fold rather than on
+       it — a caption cut in half by the screen edge reads as a bug, not as a
+       hint that there is more. */
+    min-height:calc(100dvh - var(--header-h) - var(--s2) - var(--s4) - var(--s4));
+  }
+
+  .hero-chip{margin-bottom:var(--s4);flex:none}
+
+  /* The statement is the one elastic element: it absorbs whatever the fixed
+     blocks leave over, so the screen closes on the figure rail at every phone
+     height instead of on a gap. */
+  .hero-view .display-hero{
+    flex:1 1 auto;display:flex;align-items:center;
+    margin:0;padding-block:var(--s3);
+  }
+  .hero--stack .display-hero{
+    font-size:clamp(2.6rem,12.5vw,4.75rem);
+    letter-spacing:-.04em;line-height:.94;max-width:none;
+  }
+
+  .hero-view .hero-lead{
+    flex:none;margin-top:0;padding-top:var(--s5);gap:var(--s4);
+  }
+  /* Two up at every phone width — a single-column rail is four stacked rows,
+     which is 120px this screen does not have. Every cell's padding and rules
+     are stated here rather than left to be inherited, because a stacked-rail
+     rule reaching in would put a divider above the top-right cell and drop it
+     out of line with the top-left one. */
+  .hero-view .hero-rail{
+    flex:none;margin-top:auto;padding-top:var(--s4);
+    grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s4) 0;
+  }
+  /* The column divider. */
+  .hero-view .hero-rail>div{
+    padding-left:var(--s5);border-left:1px solid var(--line);
+  }
+  .hero-view .hero-rail>div:nth-child(odd){padding-left:0;border-left:0}
+  /* The top row sits on the rail's own border; only the second row rules. */
+  .hero-view .hero-rail>div:nth-child(-n+2){padding-top:0;border-top:0}
+  .hero-view .hero-rail>div:nth-child(n+3){
+    padding-top:var(--s4);border-top:1px solid var(--line);
+  }
+  .hero-view .hero-rail b{font-size:1.25rem}
+
+  /* The lede is the one block that can give width back to the statement. */
+  .hero-view .lede{font-size:.9375rem;line-height:1.55}
+}
+
+/* A short phone is a height problem, not a width one, so it takes a height
+   query. Below ~780px of viewport the statement steps down rather than
+   pushing the figure rail off the screen it is there to close. */
+@media (max-width:900px) and (max-height:780px){
+  .hero--stack .display-hero{font-size:clamp(2.15rem,10vw,3.5rem);line-height:.96}
+  .hero-view .display-hero{padding-block:var(--s2)}
+  .hero-view .lede{font-size:.875rem;line-height:1.5}
+  .hero-view .hero-lead{padding-top:var(--s4);gap:var(--s3)}
+  .hero-view .hero-rail b{font-size:1.125rem}
+  .hero-chip{margin-bottom:var(--s3)}
+  .hero-chip .pill{font-size:.625rem}
+}
+
+/* Shorter still — an older Android in landscape-ish proportions. The lede is
+   the block that goes, because the statement and the actions are the page. */
+@media (max-width:900px) and (max-height:660px){
+  .hero--stack .display-hero{font-size:clamp(1.9rem,8.6vw,3rem)}
+  .hero-view .lede{display:none}
+}
+
+@media (max-width:900px){
+  .hero-lead{grid-template-columns:minmax(0,1fr);gap:var(--s5);align-items:start}
+}
+
+@media (max-width:700px){
+  .console--shelf .console-grid{grid-template-columns:minmax(0,1fr)}
+  .console--shelf .console-grid>.panel{
+    border-right:0;border-bottom:1px solid var(--line);padding:var(--s5);
+  }
+  .console--shelf .console-grid>.panel:last-child{border-bottom:0}
+  .console--shelf .reading{font-size:1.5rem}
+}
+
+@media (max-width:560px){
+  .hero-lead .btns{width:100%}
+  .hero-lead .btns .btn{flex:1 1 auto;min-width:0}
+}

@@ -1,0 +1,65 @@
+/* ==========================================================================
+   15 · Error pages                                   design.md — Error pages
+
+   The 404 is an instrument reporting a real reading: signal lost. The playful
+   and game-shaped 404s that dominate 404s.design are wrong here — a company
+   whose argument is that its systems stay correct when the power fails does
+   not answer its own broken link with a cartoon.
+   ========================================================================== */
+.fault{padding-block:clamp(40px,6vw,80px)}
+
+.fault-panel{
+  border:1px solid var(--line);border-radius:var(--r-3);
+  background:var(--surface);box-shadow:var(--lift);overflow:hidden;
+}
+.fault-bar{
+  display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3) var(--s4);
+  padding:var(--s3) var(--s5);border-bottom:1px solid var(--line);background:var(--bg-2);
+}
+.fault-bar .clock{margin-left:auto}
+
+.fault-body{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,.62fr);
+  gap:var(--s7);align-items:center;
+  padding:clamp(24px,3.4vw,44px) var(--s6);
+  background:var(--bg);background-image:var(--backlight);
+}
+
+/* The code is the panel's legend, set at hero scale and tabular. */
+.fault-code{
+  font-family:var(--display);font-weight:700;
+  font-variation-settings:'wdth' 112;
+  font-size:clamp(4.5rem,13vw,9.5rem);
+  letter-spacing:-.05em;line-height:.84;
+  font-variant-numeric:tabular-nums;
+  color:var(--text);
+}
+.fault-say{display:grid;gap:var(--s4);align-content:center}
+
+/* The route the visitor asked for is the reading. It is stated in full, as
+   captured — the first thing a person needs is confirmation the machine heard
+   them correctly. */
+.fault-read{
+  display:grid;gap:var(--s2);
+  background:var(--bg-2);border:1px solid var(--line-2);border-radius:var(--r-2);
+  padding:var(--s4);
+}
+.fault-read code{
+  font-family:var(--mono);font-size:clamp(.9375rem,2vw,1.25rem);font-weight:600;
+  font-variation-settings:'wdth' 87.5;letter-spacing:-.02em;
+  color:var(--text);word-break:break-all;line-height:1.4;
+}
+.fault-foot{
+  display:flex;flex-wrap:wrap;gap:var(--s2) var(--s7);
+  padding:var(--s3) var(--s5);border-top:1px solid var(--line);
+}
+
+/* The recovery: the full ruled route index, not a lone "go home" button. This
+   is search-and-recover executed without a search box, which for fourteen
+   routes is the better instrument. */
+.fault-index{margin-top:clamp(32px,4vw,56px)}
+
+@media (max-width:900px){
+  .fault-body{grid-template-columns:minmax(0,1fr);gap:var(--s5);padding:var(--s5)}
+  .fault-bar .clock{margin-left:0}
+}

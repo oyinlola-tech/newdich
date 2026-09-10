@@ -1,0 +1,107 @@
+/* ==========================================================================
+   01 · Tokens                                     design.md — Colors, Type
+
+   Three colours: black, white, blue. Everything else on this site is a tonal
+   step between them, and there is no fourth hue anywhere.
+
+   That means state cannot be carried by colour, because there are no spare
+   colours to carry it. State is carried by FORM instead:
+
+       running   solid blue mark,   full-strength text
+       held      hollow mark,       muted text
+       shipped   filled blue cell
+       not yet   outlined cell
+
+   Which is stricter than a green/amber system, and reads as equipment rather
+   than as a dashboard theme.
+   ========================================================================== */
+
+:root{
+  /* --- dark: black ground, blue signal --------------------------------- */
+  --bg:#04070B;            /* black — the ground the enclosure sits on */
+  --bg-2:#070B11;          /* alternate band */
+  --surface:#0A0F17;       /* panel face — black carrying a little blue */
+  --raised:#111926;        /* rows, hover, inner wells */
+  --line:#1A2432;          /* hairline — the only border */
+  --line-2:#141C28;        /* quieter hairline, inside panels */
+
+  --text:#EDF2F7;          /* white */
+  --text-2:#93A4B8;
+  --text-3:#7589A0;
+
+  --signal:#3B9BFF;        /* blue — the current reading, links, focus, action */
+  --signal-2:#7BBCFF;      /* hover only */
+  --signal-lo:#0E4E96;     /* dark blue — structural fill, chart bodies, cells */
+  --signal-ink:#04070B;    /* black text on a blue ground */
+  --signal-soft:rgba(59,155,255,.13);
+  --signal-line:rgba(59,155,255,.35);
+
+  /* Depth: a bevel and one wide shadow. Nothing else. */
+  --bevel:inset 0 1px 0 rgba(255,255,255,.05);
+  --lift:inset 0 1px 0 rgba(255,255,255,.065), 0 24px 48px -32px rgba(0,0,0,.9);
+  /* The one gradient: the instrument backlight. */
+  --backlight:radial-gradient(120% 90% at 78% 4%, rgba(59,155,255,.10), transparent 62%);
+
+  color-scheme:dark;
+
+  /* --- type ------------------------------------------------------------- */
+  --display:'Anybody',ui-sans-serif,system-ui,sans-serif;
+  --body:'Public Sans',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Martian Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  /* --- space, 4px base -------------------------------------------------- */
+  --s1:4px;  --s2:8px;  --s3:12px; --s4:16px; --s5:20px; --s6:24px;
+  --s7:32px; --s8:48px; --s9:64px; --s10:96px; --s11:128px;
+
+  /* --- shape ------------------------------------------------------------ */
+  --r-1:4px;      /* controls, chips, inputs */
+  --r-2:10px;     /* panel bodies, code, inner wells */
+  --r-3:18px;     /* panels, instrument frames */
+  --r-mod:27.3%;  /* the mark's module. modules only, always */
+
+  /* --- layout ----------------------------------------------------------- */
+  --page:1280px;
+  --gutter:24px;
+  --header-h:64px;
+
+  /* --- z-index contract ------------------------------------------------- */
+  --z-base:0; --z-nav:100; --z-mega:150; --z-drawer:200; --z-modal:300; --z-toast:500;
+
+  /* --- motion ----------------------------------------------------------- */
+  --in:cubic-bezier(.2,0,0,1);
+  --out:cubic-bezier(.4,0,.6,1);
+  --t-fast:120ms; --t-mid:180ms; --t-slow:320ms;
+}
+
+/* --- light: white ground, blue panels, black text -------------------------
+   Light is white AND blue: panels carry a real blue cast rather than a neutral
+   grey one, so the theme reads as the brand rather than as an absence of the
+   dark theme. Dark is where black does the work. */
+@media (prefers-color-scheme:light){
+  :root:not([data-theme=dark]){
+    --bg:#FFFFFF; --bg-2:#F2F7FE; --surface:#EBF3FD; --raised:#DBE9FA;
+    --line:#C3D8F1; --line-2:#DDE9F8;
+    --text:#04070B; --text-2:#405A76; --text-3:#4F6884;
+    --signal:#0B5FBF; --signal-2:#073F86; --signal-lo:#073F86;
+    --signal-ink:#FFFFFF;
+    --signal-soft:rgba(11,95,191,.09); --signal-line:rgba(11,95,191,.4);
+    --bevel:0 1px 2px rgba(4,7,11,.05);
+    --lift:0 1px 2px rgba(4,7,11,.06), 0 20px 40px -28px rgba(4,7,11,.35);
+    --backlight:radial-gradient(120% 90% at 78% 4%, rgba(11,95,191,.07), transparent 62%);
+    color-scheme:light;
+  }
+}
+:root[data-theme=light]{
+  --bg:#FFFFFF; --bg-2:#F2F7FE; --surface:#EBF3FD; --raised:#DBE9FA;
+  --line:#C3D8F1; --line-2:#DDE9F8;
+  --text:#04070B; --text-2:#405A76; --text-3:#4F6884;
+  --signal:#0B5FBF; --signal-2:#073F86; --signal-lo:#073F86;
+  --signal-ink:#FFFFFF;
+  --signal-soft:rgba(11,95,191,.09); --signal-line:rgba(11,95,191,.4);
+  --bevel:0 1px 2px rgba(4,7,11,.05);
+  --lift:0 1px 2px rgba(4,7,11,.06), 0 20px 40px -28px rgba(4,7,11,.35);
+  --backlight:radial-gradient(120% 90% at 78% 4%, rgba(11,95,191,.07), transparent 62%);
+  color-scheme:light;
+}
+
+@media (max-width:900px){ :root{--gutter:16px;--header-h:60px} }

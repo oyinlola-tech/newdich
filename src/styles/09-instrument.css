@@ -1,0 +1,189 @@
+/* ==========================================================================
+   09 · Instrument                                     design.md — Signatures
+   Every page opens with the running instrument for its own subject. Values
+   ship in the markup, so without JavaScript — or under reduced motion — the
+   panel is a still photograph rather than an empty frame.
+   ========================================================================== */
+.console{
+  border:1px solid var(--line);border-radius:var(--r-3);
+  background:var(--surface);box-shadow:var(--lift);overflow:hidden;
+}
+.console-bar,.console-foot{
+  display:flex;align-items:center;gap:var(--s4);
+  padding:var(--s3) var(--s5);
+}
+.console-bar{border-bottom:1px solid var(--line);background:var(--bg-2)}
+.console-foot{border-top:1px solid var(--line);flex-wrap:wrap;gap:var(--s2) var(--s6)}
+.console-bar .clock{margin-left:auto}
+.console-grid{display:grid;grid-template-columns:1fr 1fr}
+.console-grid>.panel{
+  border:0;border-radius:0;box-shadow:none;background:transparent;
+  border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.console-grid>.panel:nth-child(2n){border-right:0}
+.console-grid>.panel:nth-last-child(-n+2){border-bottom:0}
+
+/* The readout — the number is the point of the panel */
+.reading{
+  font-family:var(--mono);font-weight:600;
+  font-size:clamp(1.6rem,3vw,2.4rem);letter-spacing:-.04em;line-height:1.1;
+  display:flex;align-items:baseline;gap:var(--s2);
+}
+.reading small{font-family:var(--mono);font-size:.75rem;font-weight:500;color:var(--text-3);
+               letter-spacing:0}
+.reading--accent{color:var(--signal)}
+.reading--live{color:var(--signal)}
+.reading--held{color:var(--text-3)}
+
+/* Sparkline */
+.spark{width:100%;height:38px;margin:var(--s3) 0}
+.spark path{fill:none;stroke:var(--signal);stroke-width:1.5;
+            stroke-linecap:round;stroke-linejoin:round}
+.spark .area{fill:var(--signal-soft);stroke:none}
+
+/* Queue board */
+.queue{display:grid;gap:var(--s1);margin-top:var(--s3)}
+.queue-row{
+  display:flex;align-items:center;justify-content:space-between;gap:var(--s4);
+  padding:var(--s2) var(--s3);border-radius:var(--r-1);
+  background:var(--raised);font-size:.8125rem;color:var(--text-2);
+  transition:background var(--t-mid) var(--in),color var(--t-mid) var(--in);
+}
+.queue-row b{font-family:var(--mono);font-weight:600;color:var(--text)}
+.queue-row.is-serving{background:var(--signal-soft)}
+.queue-row.is-serving b{color:var(--signal)}
+
+/* Receipt and ledger */
+.receipt{display:grid;gap:var(--s2);margin-top:var(--s3);font-size:.8125rem}
+.receipt div{display:flex;justify-content:space-between;gap:var(--s4);color:var(--text-2)}
+.receipt div span:last-child{font-family:var(--mono);color:var(--text)}
+.receipt .total{border-top:1px dashed var(--line);padding-top:var(--s2);margin-top:var(--s1)}
+.receipt .total span:last-child{color:var(--signal)}
+
+.ledger{width:100%;font-family:var(--mono);font-size:.75rem;margin-top:var(--s3)}
+.ledger th{text-align:left;font-weight:500;color:var(--text-3);
+           font-size:.6875rem;letter-spacing:.08em;text-transform:uppercase;
+           padding-bottom:var(--s2);border-bottom:1px solid var(--line)}
+.ledger td{padding:var(--s2) 0;border-bottom:1px solid var(--line-2);color:var(--text-2)}
+.ledger td:last-child{text-align:right}
+/* Settled is stated at full strength; pending is stated muted. No hue
+   carries the difference. */
+.ledger .ok{color:var(--text)}
+.ledger .pending{color:var(--text-3)}
+
+/* Device frame — drawn product art with a mono caption naming what it is */
+.device{border:1px solid var(--line);border-radius:var(--r-3);
+        background:var(--surface);box-shadow:var(--bevel);overflow:hidden}
+.device-bar{display:flex;align-items:center;gap:var(--s2);
+            padding:var(--s3) var(--s4);border-bottom:1px solid var(--line);background:var(--bg-2)}
+.device-bar i{width:7px;height:7px;border-radius:var(--r-mod);background:var(--line);flex:none}
+.device-bar .label{margin-left:var(--s3)}
+.device-body{padding:var(--s4);background:var(--bg)}
+.device-body svg{width:100%;height:auto}
+.device-cap{padding:var(--s3) var(--s4);border-top:1px solid var(--line);
+            font-family:var(--mono);font-size:.6875rem;font-variation-settings:'wdth' 87.5;
+            letter-spacing:.06em;color:var(--text-3)}
+
+/* The capability matrix — the empty cells are the credibility */
+.matrix-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-3);
+             background:var(--surface);box-shadow:var(--bevel)}
+.matrix{min-width:660px;font-size:.875rem}
+.matrix caption{text-align:left;padding:var(--s4) var(--s5);border-bottom:1px solid var(--line);
+                font-family:var(--mono);font-size:.6875rem;font-variation-settings:'wdth' 87.5;
+                letter-spacing:.1em;text-transform:uppercase;color:var(--text-3)}
+.matrix th,.matrix td{padding:var(--s3) var(--s4);border-bottom:1px solid var(--line-2)}
+.matrix thead th{font-family:var(--mono);font-size:.625rem;font-weight:500;
+                 font-variation-settings:'wdth' 87.5;letter-spacing:.1em;text-transform:uppercase;
+                 color:var(--text-3);text-align:center}
+.matrix thead th:first-child{text-align:left}
+.matrix tbody th{text-align:left;font-family:var(--body);font-size:.9375rem;font-weight:500}
+.matrix tbody th a{display:flex;align-items:center;gap:var(--s3)}
+.matrix tbody th a:hover{color:var(--signal)}
+.matrix td{text-align:center}
+.matrix tbody tr:hover{background:var(--raised)}
+.matrix tbody tr:last-child th,.matrix tbody tr:last-child td{border-bottom:0}
+.cell{display:inline-block;width:11px;height:11px;border-radius:var(--r-mod);
+      background:var(--signal-lo)}
+.cell--empty{background:transparent;box-shadow:inset 0 0 0 1px var(--line)}
+.matrix-key{display:flex;flex-wrap:wrap;gap:var(--s5);margin-top:var(--s4)}
+.matrix-key span{display:inline-flex;align-items:center;gap:var(--s2)}
+.matrix-hint{margin-top:var(--s3)}
+
+/* Degradation strip — what happens when power or network fails.
+   design.md — it is the differentiator, so it gets a fixed place. */
+.degrade{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s5);
+  border:1px solid var(--signal-line);border-radius:var(--r-3);
+  background:var(--signal-soft);padding:var(--s5);
+}
+.degrade-head{grid-column:1 / -1;display:flex;align-items:center;gap:var(--s2)}
+.degrade div>b{display:block;font-family:var(--mono);font-size:.6875rem;font-weight:500;
+               font-variation-settings:'wdth' 87.5;letter-spacing:.1em;text-transform:uppercase;
+               color:var(--signal);margin-bottom:var(--s2)}
+.degrade div>span{font-size:.9375rem;color:var(--text-2)}
+
+@media (max-width:900px){
+  .console-grid{grid-template-columns:1fr}
+  .console-grid>.panel{border-right:0}
+  .console-grid>.panel:nth-last-child(-n+2){border-bottom:1px solid var(--line)}
+  .console-grid>.panel:last-child{border-bottom:0}
+  .degrade{grid-template-columns:1fr}
+}
+
+/* --------------------------------------------------------------------------
+   The page instrument — design.md Signatures 1. It leads the page; the
+   headline comes second.
+   -------------------------------------------------------------------------- */
+.instrument{
+  margin:0;
+  border:1px solid var(--line);border-radius:var(--r-3);
+  background:var(--surface);box-shadow:var(--lift);overflow:hidden;
+}
+.instrument-bar{
+  display:flex;align-items:center;gap:var(--s4);
+  padding:var(--s3) var(--s5);
+  border-bottom:1px solid var(--line);background:var(--bg-2);
+}
+.instrument-bar .clock{margin-left:auto}
+/* Until 07-clock.js fills it in, the placeholder would read as a broken
+   instrument. Hide it rather than show a dead readout. */
+html:not(.js) .clock{display:none}
+.instrument-body{
+  display:grid;
+  grid-template-columns:minmax(0,1.55fr) minmax(230px,.85fr);
+  gap:var(--s7);align-items:center;
+  padding:var(--s6);
+  background:var(--bg);
+  background-image:var(--backlight);
+}
+/* The art is drawn on a 400x240 canvas. Past roughly 1.6x its legend stops
+   reading as instrument type, so it gets a column rather than the page. */
+.instrument-art{min-width:0}
+.instrument-art svg{width:100%;height:auto;max-width:640px}
+
+.instrument-spec{margin:0;display:grid;gap:var(--s4);align-content:center}
+.instrument-spec div{display:grid;gap:3px}
+.instrument-spec dt{font-family:var(--mono);font-size:.625rem;font-weight:500;
+                    font-variation-settings:'wdth' 87.5;letter-spacing:.1em;
+                    text-transform:uppercase;color:var(--text-3)}
+.instrument-spec dd{margin:0;font-size:.875rem;color:var(--text-2);line-height:1.45}
+
+.instrument-foot{
+  display:flex;flex-wrap:wrap;gap:var(--s2) var(--s7);
+  padding:var(--s3) var(--s5);border-top:1px solid var(--line);
+}
+
+/* The hero that an instrument leads: panel first, then the headline block. */
+.hero-instrument{margin-bottom:var(--s7)}
+
+@media (max-width:1080px){
+  .instrument-body{grid-template-columns:minmax(0,1fr);gap:var(--s5)}
+  .instrument-art svg{max-width:none}
+  .instrument-spec{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:900px){
+  .instrument-body{padding:var(--s4)}
+  .instrument-spec{grid-template-columns:minmax(0,1fr)}
+  .instrument-bar{flex-wrap:wrap;gap:var(--s2) var(--s3)}
+  .instrument-bar .clock{margin-left:0}
+}
