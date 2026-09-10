@@ -6,3 +6,6 @@ next-env.d.ts
 .DS_Store
 _legacy/
 design.md
+# Secrets — the deployed key lives in the host, not the repo
+.env
+.env.local
