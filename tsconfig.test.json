@@ -1,0 +1,14 @@
+{
+  "//": "Emits api/contact.ts into .test-build/ so test/contact.test.mjs can import it. The main tsconfig is noEmit, which is right for it — this one exists only for the test run.",
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "incremental": false,
+    "outDir": ".test-build",
+    "rootDir": "api",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "types": ["node"]
+  },
+  "include": ["api/**/*.ts"]
+}

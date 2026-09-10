@@ -9,7 +9,7 @@
 
 import Link from 'next/link'
 
-import { COMPANY } from '@/lib/site'
+import { COMPANY, PHONE_DISPLAY } from '@/lib/site'
 import { ROUTES } from '@/lib/routes'
 import { Label } from '@/components/ui'
 
@@ -42,7 +42,7 @@ export function CtaBand({
             {COMPANY.email}
           </a>
           <a className="label" href={`tel:${COMPANY.phone}`}>
-            {COMPANY.phoneDisplay}
+            {PHONE_DISPLAY}
           </a>
           <a className="label" href={COMPANY.whatsapp} target="_blank" rel="noreferrer noopener">
             WhatsApp

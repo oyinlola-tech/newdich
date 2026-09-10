@@ -10,8 +10,10 @@ export const COMPANY = {
   short: 'Newdich',
   tagline: 'Engineering · IoT · AI · Training',
   founded: '2014',
-  phone: '+2347032095559',
-  phoneDisplay: '+234 807 056 0103',
+  /* One number, written once. `phoneDisplay` used to be typed separately and
+     drifted from `phone`, so every `tel:` link on the site dialled a different
+     line from the one printed next to it. It is derived below instead. */
+  phone: '+2348070560103',
   email: 'newdichngr@gmail.com',
   domain: 'https://newdich.tech',
   whatsapp: 'https://wa.me/2348070560103',
@@ -20,6 +22,15 @@ export const COMPANY = {
     { city: 'Okitipupa', region: 'Ondo State', note: 'Second office.' },
   ],
 } as const
+
+/**
+ * The dialling number, spaced for reading. Derived from `COMPANY.phone` rather
+ * than typed again, so the label and the link it sits on cannot disagree.
+ */
+export const PHONE_DISPLAY = COMPANY.phone.replace(
+  /^(\+\d{3})(\d{3})(\d{3})(\d{4})$/,
+  '$1 $2 $3 $4',
+)
 
 export const SOCIALS = [
   {
@@ -39,7 +50,7 @@ export const ORG_JSONLD = {
   logo: 'https://newdich.tech/newdich.png',
   foundingDate: '2014',
   email: 'newdichngr@gmail.com',
-  telephone: '+2347032095559',
+  telephone: COMPANY.phone,
   address: [
     { '@type': 'PostalAddress', addressLocality: 'Abuja', addressCountry: 'NG' },
     {

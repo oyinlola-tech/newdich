@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 
-import { COMPANY } from '@/lib/site'
+import { COMPANY, PHONE_DISPLAY } from '@/lib/site'
 import { ROUTES } from '@/lib/routes'
 import { Btn, Dot, Label } from '@/components/ui'
 import { Clock } from '@/components/Clock'
@@ -68,7 +68,7 @@ export default function Error({
               {COMPANY.email}
             </a>
             <a className="label" href={`tel:${COMPANY.phone}`}>
-              {COMPANY.phoneDisplay}
+              {PHONE_DISPLAY}
             </a>
           </div>
         </div>

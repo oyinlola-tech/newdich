@@ -16,7 +16,7 @@
  * went near this component.
  */
 
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 
 import { COMPANY } from '@/lib/site'
 import { PRACTICES } from '@/data/practices'
@@ -29,7 +29,6 @@ export function ContactForm() {
   const [errors, setErrors] = useState<Errors>({})
   const [state, setState] = useState<State>('idle')
   const [failure, setFailure] = useState('')
-  const formRef = useRef<HTMLFormElement>(null)
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -117,16 +116,16 @@ export function ContactForm() {
   }
 
   return (
-    <form className="form" onSubmit={onSubmit} noValidate ref={formRef}>
+    <form className="form" onSubmit={onSubmit} noValidate>
       <div className="field-row">
         <div className="field" data-invalid={errors.name ? 'true' : undefined}>
           <label htmlFor="f-name">Your name</label>
-          <input id="f-name" name="name" type="text" autoComplete="name" />
+          <input id="f-name" name="name" type="text" autoComplete="name" maxLength={120} />
           {errors.name ? <p className="field-err">{errors.name}</p> : null}
         </div>
         <div className="field" data-invalid={errors.email ? 'true' : undefined}>
           <label htmlFor="f-email">Email</label>
-          <input id="f-email" name="email" type="email" autoComplete="email" />
+          <input id="f-email" name="email" type="email" autoComplete="email" maxLength={200} />
           {errors.email ? <p className="field-err">{errors.email}</p> : null}
         </div>
       </div>
@@ -134,7 +133,7 @@ export function ContactForm() {
       <div className="field-row">
         <div className="field">
           <label htmlFor="f-org">Organisation</label>
-          <input id="f-org" name="org" type="text" autoComplete="organization" />
+          <input id="f-org" name="org" type="text" autoComplete="organization" maxLength={160} />
         </div>
         <div className="field">
           <label htmlFor="f-practice">Closest practice</label>
@@ -154,6 +153,7 @@ export function ContactForm() {
         <textarea
           id="f-brief"
           name="brief"
+          maxLength={5000}
           placeholder="The system, who depends on it, and the condition it has to survive — a bad network, a power cut, an audit six months later."
         />
         {errors.brief ? <p className="field-err">{errors.brief}</p> : null}
@@ -187,8 +187,9 @@ export function ContactForm() {
         </p>
       ) : (
         <p className="formnote">
-          Goes to {COMPANY.email}. We use what you send to reply to you and for nothing else —
-          no list, no third party. See the <a className="link" href="/privacy">privacy page</a>.
+          Goes to {COMPANY.email}, delivered by Resend. We use what you send to reply to you and
+          for nothing else — there is no list to be added to. See the{' '}
+          <a className="link" href="/privacy">privacy page</a>.
         </p>
       )}
     </form>

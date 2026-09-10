@@ -1,4 +1,4 @@
-import { COMPANY, SOCIALS } from '@/lib/site'
+import { COMPANY, PHONE_DISPLAY, SOCIALS } from '@/lib/site'
 import { OFFICE_NOTES } from '@/data/company'
 import { pageMeta } from '@/lib/meta'
 import { ROUTES } from '@/lib/routes'
@@ -51,7 +51,7 @@ export default function ContactPage() {
                     [
                       'Phone',
                       <a className="link" href={`tel:${COMPANY.phone}`} key="p">
-                        {COMPANY.phoneDisplay}
+                        {PHONE_DISPLAY}
                       </a>,
                     ],
                     [

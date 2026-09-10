@@ -1,0 +1,35 @@
+# Netlify deployment.
+#
+# The response headers live in `public/_headers`, which Netlify reads from the
+# root of the publish directory — `public/` is copied into `out/` by the build,
+# so there is one copy of that policy and not two. What is here is the wiring
+# that `_headers` cannot express: how to build, what to publish, and where the
+# contact function lives.
+#
+# The function itself is `api/contact.ts`, written against the Web-standard
+# Request/Response signature. Netlify's v2 functions speak that signature, so
+# the file does not change — only its location and the redirect below.
+
+[build]
+  command = "npm run build"
+  publish = "out"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# `/api/contact` is the path the form posts to. Netlify serves functions from
+# `/.netlify/functions/<name>`, so the site's own path is mapped onto it with a
+# rewrite (status 200) rather than a redirect — a 301 would drop the POST body.
+[[redirects]]
+  from = "/api/contact"
+  to = "/.netlify/functions/contact"
+  status = 200
+  force = true
+
+# Set on the host, never in the repo:
+#   RESEND_API_KEY   required
+#   CONTACT_TO       optional
+#   CONTACT_FROM     optional
+#   CONTACT_ORIGINS  optional — set to https://newdich.tech to refuse
+#                    cross-origin posts outright

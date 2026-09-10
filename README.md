@@ -22,7 +22,13 @@ npm run dev        # http://localhost:3000
 npm run build      # static export into out/
 npm run serve      # serve out/ locally
 npm run typecheck  # tsc --noEmit
+npm test           # typecheck, then the contact endpoint's guards
 ```
+
+`npm test` runs `test/contact.test.mjs` against the compiled endpoint: the
+method, content-type, origin, size, validation, header-injection and rate-limit
+cases. Every one of them is decided before the Resend call, so it sends no mail
+and needs no network and no key.
 
 Routes are directories (`trailingSlash: true`), so serve `out/` from a domain
 root or any host that resolves directory indexes — Netlify, Vercel, Cloudflare
@@ -56,6 +62,9 @@ canonical and Open Graph card.
 ```
 design.md                 The design system. The authority.
 api/contact.ts            The one function: takes the form, sends via Resend.
+vercel.json               Response headers, Vercel.
+netlify.toml              Build, function wiring and redirect, Netlify.
+public/_headers           Response headers, Netlify and Cloudflare Pages.
 next.config.ts            Static export, trailing slashes.
 src/
   app/                    Routes. Server components unless marked otherwise.
@@ -81,6 +90,8 @@ src/
     routes.ts             The route table.
     nav.ts                Navigation, footer sitemap, the 404 route index.
   styles/                 Numbered sheets, imported in order by layout.tsx.
+test/contact.test.mjs     The endpoint's guards. `npm test`.
+public/.well-known/       security.txt — where to send a security report.
 _legacy/                  The Python build this replaced. Not in the bundle.
 ```
 
@@ -120,40 +131,107 @@ blocklisted. Never put `RESEND_API_KEY` in a `NEXT_PUBLIC_*` variable.
 
 ### Environment
 
-Copy `.env.example` and set these **on the host**, not in the repo:
+Copy `.env.example` and set these **on the host**, not in the repo. Never give
+one of them a `NEXT_PUBLIC_` prefix — that prefix is the instruction to inline
+the value into the browser bundle.
 
 | Variable | Required | What |
 |---|---|---|
 | `RESEND_API_KEY` | yes | From https://resend.com/api-keys |
 | `CONTACT_TO` | no | Where enquiries land. Defaults to `newdichngr@gmail.com` |
 | `CONTACT_FROM` | no | Must be a sender on a domain verified in Resend. Until `newdich.tech` is verified, Resend's shared `onboarding@resend.dev` is used |
+| `CONTACT_ORIGINS` | no | Comma-separated origins allowed to post. Set it. Unset, the origin is not checked, because this repo cannot know a deployment's hostname |
 
 ### Per host
 
-- **Vercel** — works as-is. A root `/api` directory is deployed as a function
-  regardless of the framework, and the Next static export is served from `out/`.
-- **Netlify** — move the file to `netlify/functions/contact.ts` and add
-  `[[redirects]] from = "/api/contact" to = "/.netlify/functions/contact"` with
-  `status = 200` in `netlify.toml`. The handler signature is the same.
-- **Cloudflare Pages** — move it to `functions/api/contact.ts`; Pages Functions
+The handler is written against the Web-standard `Request`/`Response` signature,
+so its body does not change between the three. Only its location does.
+
+- **Vercel** — the file stays at `api/contact.ts` and `vercel.json` supplies the
+  headers.
+- **Netlify** — move the file to `netlify/functions/contact.ts`. The redirect
+  that maps `/api/contact` onto it is already in `netlify.toml`; it is a rewrite
+  (`status = 200`) and not a redirect, because a 301 would drop the POST body.
+- **Cloudflare Pages** — move it to `functions/api/contact.ts`. Pages Functions
   already speak `Request`/`Response` and already route `/api/contact`.
 
-The handler is written against the Web-standard `Request`/`Response`
-signature so the body of it does not change between the three.
+**Verify the endpoint on the first deployment, before the form is announced.**
+A static export has no server of its own, so whether `/api/contact` resolves is
+a property of the host's configuration and not of anything in this repo — and
+the failure mode is silent from the outside: the form reports that it could not
+send and offers the email address instead, which looks like a network problem
+rather than a route that was never wired. Two calls settle it:
+
+```bash
+curl -i https://newdich.tech/api/contact                     # expect 405, not 404
+curl -i -X POST https://newdich.tech/api/contact \
+  -H 'content-type: application/json' -H 'origin: https://newdich.tech' \
+  -d '{"name":"Test","email":"you@example.com","brief":"A deployment check, twenty characters or more."}'
+```
+
+A `404` on the first means the function is not deployed at that path. A `500`
+on the second means `RESEND_API_KEY` is not set on the host.
 
 ### Behaviour
 
 | Case | Response |
 |---|---|
 | `RESEND_API_KEY` unset | `500` — it refuses rather than pretending to send |
-| `GET` | `405` |
-| Body is not JSON | `400` |
+| Any method but `POST` | `405`; `OPTIONS` gets `204` and no CORS grant |
+| Content type is not JSON | `415` |
+| Origin is not in `CONTACT_ORIGINS` | `403` |
+| Body over 16 KB | `413`, on the declared length and again on the read |
+| Body is not a JSON object | `400` |
+| Over the rate limit | `429` with `Retry-After` |
 | Honeypot filled | `200` — accepted silently so a bot learns nothing |
 | Field fails validation | `422` with a per-field message the form renders |
 | Resend refuses | `502`, logged; the form offers the email address instead |
 
-Everything reaching the mail body is HTML-escaped and the subject is stripped
-of CR/LF, because it is all attacker-controlled text from a public form.
+### What it defends against
+
+The endpoint is unauthenticated, publicly reachable, and it spends money and
+sender reputation when it runs. Each guard answers one line of that:
+
+- **Flooding the inbox** — a rolling per-address limit (2 a minute, 5 an hour)
+  and a ceiling on the endpoint as a whole (60 an hour). The counter lives in
+  one function instance's memory, so it is a speed bump rather than a wall;
+  the durable version belongs in front of the function (Vercel's firewall, a
+  Cloudflare rate-limiting rule, or a shared store). This is written in the
+  file rather than left to be discovered.
+- **Mail sent as somebody else** — everything reaching the body is HTML-escaped
+  including the apostrophe, the subject and every header value is stripped of
+  CR/LF, control characters are removed from every field, and the reply-to must
+  match a strict address shape with no whitespace, comma or angle bracket.
+- **Being made to parse a large body** — the size is checked before the read,
+  and the read is capped again, because a `Content-Length` is only a claim.
+- **A cross-site post from a visitor's browser** — a JSON content type is
+  required, which a browser cannot send cross-origin without a preflight, and
+  no preflight is granted. `CONTACT_ORIGINS` closes it explicitly.
+
+### Response headers
+
+`next.config.ts` cannot carry them: a `headers()` block there is served by the
+Next.js server, and `output: 'export'` means there is no server — only files,
+and whatever host serves them. So the policy is written per host, and the two
+copies must be changed together:
+
+- `vercel.json` — Vercel.
+- `public/_headers` — Netlify and Cloudflare Pages, both of which read it from
+  the root of the published directory. `public/` is copied into `out/`, so it
+  ships with the build.
+
+Both set the same thing: HSTS, `nosniff`, `frame-ancestors 'none'`, a referrer
+policy, a `Permissions-Policy` that turns off every device API this site does
+not use, and a CSP. The CSP's `script-src` includes `'unsafe-inline'` and the
+file says why — the App Router inlines its hydration payload and the theme
+script must run before first paint, and a static export has no request to
+derive a nonce from. Everything around that directive is closed: no plugins, no
+framing, no base rewrite, forms post only to this origin, connections go
+nowhere else.
+
+`public/.well-known/security.txt` (RFC 9116) states where to send a report.
+**Its `Expires` date is not optional and a stale file is worse than none** —
+renew it before 2027-09-10.
 
 ---
 

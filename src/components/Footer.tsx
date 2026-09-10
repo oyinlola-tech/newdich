@@ -12,7 +12,7 @@
 
 import Link from 'next/link'
 
-import { COMPANY, SOCIALS } from '@/lib/site'
+import { COMPANY, PHONE_DISPLAY, SOCIALS } from '@/lib/site'
 import { FOOTER_LINKS } from '@/lib/nav'
 import { ROUTES } from '@/lib/routes'
 import { Clock } from '@/components/Clock'
@@ -53,7 +53,7 @@ export function Footer() {
               {COMPANY.email}
             </a>
             <a className="foot-line" href={`tel:${COMPANY.phone}`}>
-              {COMPANY.phoneDisplay}
+              {PHONE_DISPLAY}
             </a>
             <a
               className="foot-line"

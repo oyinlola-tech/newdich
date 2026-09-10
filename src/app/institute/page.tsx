@@ -10,7 +10,7 @@ import {
   TRACKS,
 } from '@/data/institute'
 import { FAQ_GROUPS } from '@/data/faq'
-import { COMPANY } from '@/lib/site'
+import { COMPANY, PHONE_DISPLAY } from '@/lib/site'
 import { pageMeta } from '@/lib/meta'
 import { ROUTES, canonical } from '@/lib/routes'
 import { CtaBand } from '@/components/CtaBand'
@@ -195,7 +195,7 @@ export default function InstitutePage() {
           <Steps items={ENROLMENT.map(([t, n]) => [t, n])} />
           <p className="small" style={{ marginTop: 'var(--s6)' }}>
             Fees, cohort dates and entry requirements are agreed in the conversation rather than
-            published here — write to {COMPANY.email} or call {COMPANY.phoneDisplay} and we will
+            published here — write to {COMPANY.email} or call {PHONE_DISPLAY} and we will
             tell you what the next cohort costs and when it starts.
           </p>
         </div>

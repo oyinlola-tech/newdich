@@ -1,0 +1,13 @@
+# https://www.rfc-editor.org/rfc/rfc9116 — where to send a security report.
+#
+# A company that lists cybersecurity as a practice should be reachable about
+# its own site. This is that address, stated in the place a researcher looks
+# first, so a finding arrives as an email rather than as a surprise.
+#
+# Expires is not optional in RFC 9116, and a stale file is worse than none:
+# renew it before the date below.
+
+Contact: mailto:newdichngr@gmail.com
+Expires: 2027-09-10T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://newdich.tech/.well-known/security.txt

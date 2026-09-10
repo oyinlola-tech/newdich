@@ -20,6 +20,7 @@ import '@/styles/17-filmstrip.css'
 
 import { COMPANY, ORG_JSONLD } from '@/lib/site'
 import { Footer } from '@/components/Footer'
+import { JsonLd } from '@/components/JsonLd'
 import { Nav } from '@/components/Nav'
 import { Reveal } from '@/components/Reveal'
 import { ThemeScript } from '@/components/ThemeScript'
@@ -78,10 +79,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="stylesheet" href={FONTS} />
         <ThemeScript />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_JSONLD) }}
-        />
+        {/* Through the same component every other schema uses, so the
+            escaping is decided in one place and cannot drift. */}
+        <JsonLd data={ORG_JSONLD} />
       </head>
       <body>
         <a className="skip" href="#main">

@@ -30,8 +30,8 @@ export default function PrivacyPage() {
             rows={[
               ['Analytics', 'None on this site'],
               ['Cookies', 'None. Your theme choice is stored in your own browser only'],
-              ['Third parties', 'Google Fonts serves the three typefaces'],
-              ['Enquiries', 'What you send by mail, kept while we are talking'],
+              ['Third parties', 'Google Fonts serves the typefaces; Resend delivers the form'],
+              ['Enquiries', 'What you type in the form, kept while we are talking'],
             ]}
           />
         </div>
@@ -56,10 +56,24 @@ export default function PrivacyPage() {
 
             <h2 id="enquiries">Enquiries</h2>
             <p>
-              The contact form has no server behind it. Submitting it opens your own mail client
-              with the fields filled in, so nothing is transmitted until you send that mail
-              yourself. When you do, we receive whatever you wrote — normally a name, an email
-              address, an organisation and a description of the system you want built.
+              The contact form posts what you typed to one endpoint on this site, which turns it
+              into an email addressed to us. That is the only part of this site with a server
+              behind it, and it runs only when you press send. What reaches us is what you wrote —
+              normally a name, an email address, an organisation, the practice you picked and a
+              description of the system you want built.
+            </p>
+            <p>
+              The mail itself is delivered by <strong>Resend</strong>, an email provider, which
+              processes the message in order to deliver it and keeps a delivery record. Your
+              address is used as the reply-to on that mail so that answering it reaches you. If
+              you would rather not involve a third party at all, write to{' '}
+              <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a> directly — it is the same
+              inbox.
+            </p>
+            <p>
+              The endpoint also reads the network address your request arrives from. It is used
+              for one thing — counting requests, so the form cannot be used to flood the inbox —
+              and it is held in memory for that count and not written to a database.
             </p>
             <p>
               We keep an enquiry while we are in conversation about it and for as long afterwards

@@ -1,0 +1,41 @@
+# Response headers for the static build.
+#
+# Netlify and Cloudflare Pages both read this file from the root of the
+# published directory. `public/` is copied verbatim into `out/`, so this ships
+# with the build without a step to remember. Vercel does not read it — the same
+# policy is written into `vercel.json`, and the two must be changed together.
+#
+# `next.config.ts` cannot carry these. A `headers()` block there is served by
+# the Next.js server, and this site has no server: `output: 'export'` writes
+# files, and whatever host serves those files is the only thing in a position
+# to attach a header to them.
+#
+# On the Content-Security-Policy below, stated plainly rather than left as a
+# surprise: `script-src` includes `'unsafe-inline'`. The App Router inlines its
+# hydration payload into every page and the theme script has to run before the
+# first paint, and a static export has no request to derive a nonce from. The
+# honest options are a nonce (needs a server), a hash list (changes with every
+# build), or this. So the script directive is weak, and everything around it is
+# not: no plugins, no framing, no base tag rewrite, forms post only to this
+# origin, and connections go nowhere but here.
+
+/*
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; media-src 'self'; worker-src 'self'; frame-src 'none'; upgrade-insecure-requests
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: accelerometer=(), autoplay=(), camera=(), display-capture=(), encrypted-media=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), usb=(), xr-spatial-tracking=()
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-site
+  X-DNS-Prefetch-Control: off
+
+# Hashed filenames. They can never change under a URL, so they never need
+# revalidating.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# The endpoint answers for itself — it sets no-store on every response — but a
+# CDN in front of it should not be forming its own opinion about a POST.
+/api/*
+  Cache-Control: no-store

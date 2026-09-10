@@ -9,3 +9,6 @@ design.md
 # Secrets — the deployed key lives in the host, not the repo
 .env
 .env.local
+
+# Emitted by `npm run test:contact`
+.test-build/

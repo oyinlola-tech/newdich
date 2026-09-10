@@ -10,12 +10,25 @@
 import { COMPANY } from '@/lib/site'
 import { canonical } from '@/lib/routes'
 
+/**
+ * `JSON.stringify` escapes for JSON, not for HTML, so the string `</script>`
+ * inside any value would close this element and everything after it would be
+ * parsed as markup. Nothing on this site puts a visitor's text into structured
+ * data today — but "today" is the whole of that guarantee, and the fix is one
+ * substitution that costs nothing and cannot be forgotten later. The escapes
+ * below are still valid JSON, so a consumer reads exactly the same object.
+ */
+const jsonForHtml = (data: object) =>
+  JSON.stringify(data)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029')
+
 export function JsonLd({ data }: { data: object }) {
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
-    />
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonForHtml(data) }} />
   )
 }
 

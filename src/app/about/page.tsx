@@ -2,7 +2,7 @@ import { OFFICE_NOTES, TEAM, TIMELINE, VALUES } from '@/data/company'
 import { CASES } from '@/data/work'
 import { PRACTICES } from '@/data/practices'
 import { STATS } from '@/data/institute'
-import { COMPANY } from '@/lib/site'
+import { COMPANY, PHONE_DISPLAY } from '@/lib/site'
 import { pageMeta } from '@/lib/meta'
 import { ROUTES } from '@/lib/routes'
 import { CtaBand } from '@/components/CtaBand'
@@ -109,7 +109,7 @@ export default function AboutPage() {
               <Spec
                 rows={[
                   ['Email', <a className="link" href={`mailto:${COMPANY.email}`} key="e">{COMPANY.email}</a>],
-                  ['Phone', <a className="link" href={`tel:${COMPANY.phone}`} key="p">{COMPANY.phoneDisplay}</a>],
+                  ['Phone', <a className="link" href={`tel:${COMPANY.phone}`} key="p">{PHONE_DISPLAY}</a>],
                   ['WhatsApp', <a className="link" href={COMPANY.whatsapp} key="w" target="_blank" rel="noreferrer noopener">Message us</a>],
                   ['Reply time', 'Within 24 hours'],
                 ]}
