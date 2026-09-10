@@ -55,6 +55,7 @@ canonical and Open Graph card.
 
 ```
 design.md                 The design system. The authority.
+api/contact.ts            The one function: takes the form, sends via Resend.
 next.config.ts            Static export, trailing slashes.
 src/
   app/                    Routes. Server components unless marked otherwise.
@@ -103,6 +104,56 @@ Every page is complete and readable with JavaScript off. The nav swaps its
 menu triggers for the links behind them, the footer sitemap carries the full
 route list, the FAQ is native `<details>`, and the instruments ship their
 composed static frame in the markup rather than an empty panel.
+
+---
+
+## The contact endpoint
+
+The site is a static export with one exception: `api/contact.ts`, a platform
+function that receives the contact form and sends it with
+[Resend](https://resend.com).
+
+**It is a function and not browser code on purpose.** A Resend API key is a
+secret — there is no publishable browser key. A key in the client bundle can be
+lifted out and used to send mail as `newdich.tech`, which ends with the domain
+blocklisted. Never put `RESEND_API_KEY` in a `NEXT_PUBLIC_*` variable.
+
+### Environment
+
+Copy `.env.example` and set these **on the host**, not in the repo:
+
+| Variable | Required | What |
+|---|---|---|
+| `RESEND_API_KEY` | yes | From https://resend.com/api-keys |
+| `CONTACT_TO` | no | Where enquiries land. Defaults to `newdichngr@gmail.com` |
+| `CONTACT_FROM` | no | Must be a sender on a domain verified in Resend. Until `newdich.tech` is verified, Resend's shared `onboarding@resend.dev` is used |
+
+### Per host
+
+- **Vercel** — works as-is. A root `/api` directory is deployed as a function
+  regardless of the framework, and the Next static export is served from `out/`.
+- **Netlify** — move the file to `netlify/functions/contact.ts` and add
+  `[[redirects]] from = "/api/contact" to = "/.netlify/functions/contact"` with
+  `status = 200` in `netlify.toml`. The handler signature is the same.
+- **Cloudflare Pages** — move it to `functions/api/contact.ts`; Pages Functions
+  already speak `Request`/`Response` and already route `/api/contact`.
+
+The handler is written against the Web-standard `Request`/`Response`
+signature so the body of it does not change between the three.
+
+### Behaviour
+
+| Case | Response |
+|---|---|
+| `RESEND_API_KEY` unset | `500` — it refuses rather than pretending to send |
+| `GET` | `405` |
+| Body is not JSON | `400` |
+| Honeypot filled | `200` — accepted silently so a bot learns nothing |
+| Field fails validation | `422` with a per-field message the form renders |
+| Resend refuses | `502`, logged; the form offers the email address instead |
+
+Everything reaching the mail body is HTML-escaped and the subject is stripped
+of CR/LF, because it is all attacker-controlled text from a public form.
 
 ---
 
