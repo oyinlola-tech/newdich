@@ -1,0 +1,116 @@
+/* ==========================================================================
+   16 · Gallery                                            design.md — Gallery
+
+   An oversized headline ringed by plates, after ThreeUI's gallery heading.
+   Four plates above, one to each side, two below — a ring with a deliberate
+   silhouette rather than a filled rectangle.
+
+   The plates hold still until the pointer arrives. Their displacement is
+   written by the component as --px / --py / --lift, so the only thing this
+   sheet has to do is consume them on the compositor.
+   ========================================================================== */
+.gallery{position:relative;overflow:clip}
+
+.gallery-ring{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:var(--gutter);
+  align-items:stretch;
+}
+
+/* The headline sits in the middle two columns of the middle row, so the ring
+   closes around it on three sides. */
+.gallery-say{
+  grid-column:2 / span 2;grid-row:2;
+  display:flex;flex-direction:column;justify-content:center;gap:var(--s4);
+  padding:var(--s5) var(--s2);text-align:center;align-items:center;
+}
+.gallery-head{
+  font-family:var(--display);font-weight:700;
+  font-variation-settings:'wdth' 112;
+  font-size:clamp(2rem,4.4vw,3.75rem);
+  letter-spacing:-.04em;line-height:.94;
+  text-wrap:balance;margin:0;
+}
+.gallery-say .copy{font-size:.9375rem;max-width:42ch;text-align:center}
+
+/* --- the plate ------------------------------------------------------------ */
+.plate{
+  grid-column:var(--col);grid-row:var(--row);
+  display:flex;flex-direction:column;
+  background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--r-3);
+  box-shadow:var(--bevel);
+  overflow:hidden;
+  /* The pointer displacement. Transform and opacity only — no layout property
+     is animated, and both custom properties default to nothing moving, which
+     is also the no-JavaScript state. */
+  --px:0px; --py:0px; --lift:0;
+  transform:translate3d(var(--px),var(--py),0);
+  transition:transform 420ms var(--out),border-color var(--t-fast) var(--in);
+  will-change:transform;
+}
+.plate:hover,.plate:focus-visible{border-color:var(--signal)}
+
+/* The instrument backlight rises with the pointer rather than switching on. */
+.plate-art{
+  display:block;position:relative;
+  aspect-ratio:4 / 3;
+  display:grid;place-items:center;
+  padding:var(--s4);
+  background:var(--bg);
+}
+.plate-art::before{
+  content:'';position:absolute;inset:0;
+  background:var(--backlight);
+  opacity:calc(var(--lift) * .9);
+  transition:opacity 420ms var(--out);
+  pointer-events:none;
+}
+.plate-art svg{position:relative;width:100%;height:auto}
+
+.plate-rail{
+  display:grid;gap:2px;
+  padding:var(--s3) var(--s4) var(--s4);
+  border-top:1px solid var(--line-2);
+}
+.plate-rail b{
+  font-family:var(--display);font-weight:700;
+  font-variation-settings:'wdth' 105;
+  font-size:.9375rem;letter-spacing:-.015em;line-height:1.25;
+  transition:color var(--t-fast) var(--in);
+}
+.plate:hover .plate-rail b{color:var(--signal)}
+
+/* --------------------------------------------------------------------------
+   Responsive. The ring is a desktop composition; under 900px it unrolls into
+   the headline followed by a two-up index of plates, which is what the same
+   content wants to be on a phone.
+   -------------------------------------------------------------------------- */
+@media (max-width:1080px){
+  .gallery-ring{gap:var(--s4)}
+  .plate-rail{padding:var(--s2) var(--s3) var(--s3)}
+  .plate-art{padding:var(--s3)}
+}
+
+@media (max-width:900px){
+  .gallery-ring{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--gutter)}
+  .gallery-say{
+    grid-column:1 / -1;grid-row:auto;
+    padding:0 0 var(--s5);text-align:left;align-items:flex-start;
+  }
+  .gallery-say .copy{text-align:left}
+  .plate{grid-column:auto;grid-row:auto}
+  /* Nothing follows a pointer on a touch screen, so the plates never move and
+     the backlight never rises. */
+  .plate{transform:none}
+}
+
+@media (max-width:520px){
+  .gallery-ring{grid-template-columns:minmax(0,1fr)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .plate{transform:none;transition:border-color var(--t-fast) var(--in)}
+  .plate-art::before{opacity:0}
+}
