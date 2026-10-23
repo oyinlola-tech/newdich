@@ -1,22 +1,10 @@
-/**
- * The Institute gallery.
- *
- * These are Newdich's own photographs of its own school, taken from
- * https://newdich.tech/institute on 2026-09-10 and re-encoded for the web.
- * design.md bans **stock** photography; a company's own record of its own
- * classroom is evidence, not decoration, and it is the one place on this site
- * where a photograph tells you something a drawing cannot.
- *
- * Dimensions are the real intrinsic sizes of the files in `public/gallery/`.
- * They ship on every <img> so the filmstrip reserves the right box before the
- * image arrives and the row never jumps.
- */
+
 
 export type Shot = {
   file: string
   w: number
   h: number
-  /** What the picture is, for a screen reader and for search. */
+  
   alt: string
   group: 'Teaching' | 'Graduation' | 'People'
   caption: string
@@ -124,14 +112,7 @@ export const SHOTS: Shot[] = [
     note: 'Fullstack · Cybersecurity · Data',
   },
   {
-    /**
-     * The source page serves this file as `olu.jpg` but repeats the previous
-     * image's alt text on it, so the two disagree about who it is. The
-     * filename points at Olumide David; the alt points at Silas Ikusaanu.
-     * Rather than pick one and publish a real person under the wrong name, the
-     * card states the role and leaves the name to be confirmed — see the
-     * README, "Placeholders to confirm".
-     */
+    
     file: 'olu.jpg',
     w: 588,
     h: 568,

@@ -1,11 +1,4 @@
-/**
- * The capability matrix — seven practices by five sectors, filled only where
- * work has shipped.
- *
- * design.md, Components: the empty cells are the credibility. They are the
- * reason a buyer believes the filled ones, so nothing here rounds a gap up.
- * A real <table> with scope, readable cell by cell by a screen reader.
- */
+
 
 import Link from 'next/link'
 

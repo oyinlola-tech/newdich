@@ -1,14 +1,4 @@
-/**
- * The page instrument — design.md, Overview.
- *
- * Every system page opens with the running instrument for its own subject; the
- * headline comes second. The side column and the rails are built from that
- * page's own real content — the case's facts, the practice's stack — never
- * from figures invented to fill the panel.
- *
- * An instrument that has no reading does not ship, which is why company pages
- * call PageSpec instead.
- */
+
 
 import type { ReactNode } from 'react'
 

@@ -1,13 +1,4 @@
-/**
- * Newdich Technology Institute — tracks, mentors, enrolment.
- *
- * Checked against the Institute's own page at https://newdich.tech/institute
- * on 2026-09-10: the tagline, the six tracks and their descriptions, the two
- * published figures, the mentor list, the support services and the Okitipupa
- * location are the Institute's own. Fees, cohort dates and entry requirements
- * are not published there, so this page does not state any — see the README
- * under "Placeholders to confirm".
- */
+
 
 export const TAGLINE = 'Train · Build · Launch'
 
@@ -132,7 +123,7 @@ export const MENTORS: Array<[string, string, string, string]> = [
   ['Shola Ekundayo', 'SE', 'Fullstack · data analyst', 'Front-end systems and reporting.'],
 ]
 
-/** The three support services the Institute names on its own page. */
+
 export const SUPPORT: Array<[string, string]> = [
   [
     'Industry mentors',

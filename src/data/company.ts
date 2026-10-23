@@ -1,11 +1,4 @@
-/**
- * The company itself: how it works, who is in it, what it believes, what it
- * charges for.
- *
- * Anything here the company should confirm before launch is marked in the
- * README under "Placeholders to confirm" rather than being quietly presented
- * as fact.
- */
+
 
 export const VALUES: Array<[string, string]> = [
   [

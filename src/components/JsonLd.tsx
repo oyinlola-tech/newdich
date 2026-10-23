@@ -1,23 +1,9 @@
-/**
- * Structured data.
- *
- * One component, so every schema on the site is serialised the same way and a
- * page can never ship a half-escaped blob. The payload is authored in this
- * repository — it is never assembled from anything a visitor typed — so
- * setting it as HTML is safe here in a way it would not be for user content.
- */
+
 
 import { COMPANY } from '@/lib/site'
 import { canonical } from '@/lib/routes'
 
-/**
- * `JSON.stringify` escapes for JSON, not for HTML, so the string `</script>`
- * inside any value would close this element and everything after it would be
- * parsed as markup. Nothing on this site puts a visitor's text into structured
- * data today — but "today" is the whole of that guarantee, and the fix is one
- * substitution that costs nothing and cannot be forgotten later. The escapes
- * below are still valid JSON, so a consumer reads exactly the same object.
- */
+
 const jsonForHtml = (data: object) =>
   JSON.stringify(data)
     .replace(/</g, '\\u003c')
@@ -32,11 +18,7 @@ export function JsonLd({ data }: { data: object }) {
   )
 }
 
-/**
- * A BreadcrumbList matching the breadcrumb the page already renders. Search
- * results show the trail instead of a bare URL, and the two can never disagree
- * because both are built from the same route table.
- */
+
 export function breadcrumbs(trail: Array<[string, string]>) {
   return {
     '@context': 'https://schema.org',
@@ -50,7 +32,7 @@ export function breadcrumbs(trail: Array<[string, string]>) {
   }
 }
 
-/** An FAQPage, from the same question and answer pairs the page renders. */
+
 export function faqPage(items: Array<[string, string]>) {
   return {
     '@context': 'https://schema.org',
@@ -63,7 +45,7 @@ export function faqPage(items: Array<[string, string]>) {
   }
 }
 
-/** An Article, for a piece in Insights. */
+
 export function article({
   title,
   description,

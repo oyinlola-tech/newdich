@@ -1,21 +1,6 @@
 'use client'
 
-/**
- * The filmstrip — after ThreeUI's character carousel.
- *
- * The reference is an editorial character-card carousel driven by
- * "pointer + wheel + keyboard + card focus", responsive, visibility-aware and
- * reduced-motion aware. All four inputs are here, and so is the thing that
- * makes it acceptable under design.md's ban on carousels: **it never advances
- * on its own.** The ban exists because an auto-rotating banner hides content
- * and moves it out from under the reader. A strip that only moves when a
- * person moves it is a horizontal list, and a horizontal list is what twelve
- * photographs of one school want to be.
- *
- * Cards share a height and take their width from the photograph's own aspect
- * ratio, so portrait and landscape sit on the same rail without either being
- * cropped to match the other. That is the editorial part.
- */
+
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 
@@ -42,8 +27,7 @@ export function Filmstrip() {
     typeof window !== 'undefined' &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-  /* Which end the strip is against, so the controls can disable rather than
-     sit there doing nothing. */
+  
   const syncEnds = useCallback(() => {
     const el = rail.current
     if (!el) return
@@ -64,7 +48,7 @@ export function Filmstrip() {
     }
   }, [syncEnds])
 
-  /** One card plus its gap — the unit the controls and the keys move by. */
+  
   const step = () => {
     const el = rail.current
     if (!el) return 320
@@ -79,24 +63,20 @@ export function Filmstrip() {
     })
   }, [])
 
-  /* Wheel: a vertical wheel over the strip scrolls it sideways, which is what
-     a trackpad user expects and what a mouse user has no other way to do.
-     A genuinely horizontal gesture is left to the browser. */
+  
   const onWheel = useCallback((e: React.WheelEvent<HTMLUListElement>) => {
     const el = rail.current
     if (!el) return
     if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return
     const next = el.scrollLeft + e.deltaY
-    /* Only swallow the page's scroll while the strip still has somewhere to
-       go, so reaching the end hands the page back rather than trapping it. */
+    
     if (next > 0 && next < el.scrollWidth - el.clientWidth) {
       e.preventDefault()
       el.scrollLeft = next
     }
   }, [])
 
-  /* Pointer drag, mouse and pen only — touch already scrolls natively and
-     hijacking it would fight the platform. */
+  
   const onPointerDown = (e: React.PointerEvent<HTMLUListElement>) => {
     if (e.pointerType === 'touch') return
     const el = rail.current
@@ -117,7 +97,7 @@ export function Filmstrip() {
   const endDrag = (e: React.PointerEvent<HTMLUListElement>) => {
     const el = rail.current
     if (el?.hasPointerCapture(e.pointerId)) el.releasePointerCapture(e.pointerId)
-    /* A drag that travelled is not a click on the card underneath it. */
+    
     if (drag.current?.moved) {
       const swallow = (ev: Event) => ev.preventDefault()
       window.addEventListener('click', swallow, { capture: true, once: true })
@@ -200,9 +180,7 @@ export function Filmstrip() {
                   alt={shot.alt}
                   width={shot.w}
                   height={shot.h}
-                  /* The first three are on screen at every width, so they are
-                     the LCP candidate and must not wait for the strip to be
-                     scrolled. Everything past them is lazy. */
+                  
                   loading={i < 3 ? 'eager' : 'lazy'}
                   fetchPriority={i === 0 ? 'high' : undefined}
                   decoding="async"

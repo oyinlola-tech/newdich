@@ -1,9 +1,4 @@
-/* ==========================================================================
-   09 · Instrument                                     design.md — Signatures
-   Every page opens with the running instrument for its own subject. Values
-   ship in the markup, so without JavaScript — or under reduced motion — the
-   panel is a still photograph rather than an empty frame.
-   ========================================================================== */
+
 .console{
   border:1px solid var(--line);border-radius:var(--r-3);
   background:var(--surface);box-shadow:var(--lift);overflow:hidden;
@@ -23,7 +18,7 @@
 .console-grid>.panel:nth-child(2n){border-right:0}
 .console-grid>.panel:nth-last-child(-n+2){border-bottom:0}
 
-/* The readout — the number is the point of the panel */
+
 .reading{
   font-family:var(--mono);font-weight:600;
   font-size:clamp(1.6rem,3vw,2.4rem);letter-spacing:-.04em;line-height:1.1;
@@ -35,13 +30,13 @@
 .reading--live{color:var(--signal)}
 .reading--held{color:var(--text-3)}
 
-/* Sparkline */
+
 .spark{width:100%;height:38px;margin:var(--s3) 0}
 .spark path{fill:none;stroke:var(--signal);stroke-width:1.5;
             stroke-linecap:round;stroke-linejoin:round}
 .spark .area{fill:var(--signal-soft);stroke:none}
 
-/* Queue board */
+
 .queue{display:grid;gap:var(--s1);margin-top:var(--s3)}
 .queue-row{
   display:flex;align-items:center;justify-content:space-between;gap:var(--s4);
@@ -53,7 +48,7 @@
 .queue-row.is-serving{background:var(--signal-soft)}
 .queue-row.is-serving b{color:var(--signal)}
 
-/* Receipt and ledger */
+
 .receipt{display:grid;gap:var(--s2);margin-top:var(--s3);font-size:.8125rem}
 .receipt div{display:flex;justify-content:space-between;gap:var(--s4);color:var(--text-2)}
 .receipt div span:last-child{font-family:var(--mono);color:var(--text)}
@@ -66,12 +61,11 @@
            padding-bottom:var(--s2);border-bottom:1px solid var(--line)}
 .ledger td{padding:var(--s2) 0;border-bottom:1px solid var(--line-2);color:var(--text-2)}
 .ledger td:last-child{text-align:right}
-/* Settled is stated at full strength; pending is stated muted. No hue
-   carries the difference. */
+
 .ledger .ok{color:var(--text)}
 .ledger .pending{color:var(--text-3)}
 
-/* Device frame — drawn product art with a mono caption naming what it is */
+
 .device{border:1px solid var(--line);border-radius:var(--r-3);
         background:var(--surface);box-shadow:var(--bevel);overflow:hidden}
 .device-bar{display:flex;align-items:center;gap:var(--s2);
@@ -84,7 +78,7 @@
             font-family:var(--mono);font-size:.6875rem;font-variation-settings:'wdth' 87.5;
             letter-spacing:.06em;color:var(--text-3)}
 
-/* The capability matrix — the empty cells are the credibility */
+
 .matrix-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-3);
              background:var(--surface);box-shadow:var(--bevel)}
 .matrix{min-width:660px;font-size:.875rem}
@@ -109,8 +103,7 @@
 .matrix-key span{display:inline-flex;align-items:center;gap:var(--s2)}
 .matrix-hint{margin-top:var(--s3)}
 
-/* Degradation strip — what happens when power or network fails.
-   design.md — it is the differentiator, so it gets a fixed place. */
+
 .degrade{
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s5);
   border:1px solid var(--signal-line);border-radius:var(--r-3);
@@ -130,10 +123,7 @@
   .degrade{grid-template-columns:1fr}
 }
 
-/* --------------------------------------------------------------------------
-   The page instrument — design.md Signatures 1. It leads the page; the
-   headline comes second.
-   -------------------------------------------------------------------------- */
+
 .instrument{
   margin:0;
   border:1px solid var(--line);border-radius:var(--r-3);
@@ -145,8 +135,7 @@
   border-bottom:1px solid var(--line);background:var(--bg-2);
 }
 .instrument-bar .clock{margin-left:auto}
-/* Until 07-clock.js fills it in, the placeholder would read as a broken
-   instrument. Hide it rather than show a dead readout. */
+
 html:not(.js) .clock{display:none}
 .instrument-body{
   display:grid;
@@ -156,8 +145,7 @@ html:not(.js) .clock{display:none}
   background:var(--bg);
   background-image:var(--backlight);
 }
-/* The art is drawn on a 400x240 canvas. Past roughly 1.6x its legend stops
-   reading as instrument type, so it gets a column rather than the page. */
+
 .instrument-art{min-width:0}
 .instrument-art svg{width:100%;height:auto;max-width:640px}
 
@@ -173,7 +161,7 @@ html:not(.js) .clock{display:none}
   padding:var(--s3) var(--s5);border-top:1px solid var(--line);
 }
 
-/* The hero that an instrument leads: panel first, then the headline block. */
+
 .hero-instrument{margin-bottom:var(--s7)}
 
 @media (max-width:1080px){

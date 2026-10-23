@@ -3,10 +3,7 @@ import type { Metadata } from 'next'
 import { COMPANY } from '@/lib/site'
 import { canonical } from '@/lib/routes'
 
-/**
- * One place a page's metadata is assembled, so a title, a canonical and an
- * Open Graph card can never drift apart. design.md, Routes and output.
- */
+
 export function pageMeta({
   title,
   description,
@@ -16,7 +13,7 @@ export function pageMeta({
   title: string
   description: string
   path: string
-  /** A page-specific social card. Falls back to the site card. */
+  
   image?: string
 }): Metadata {
   const url = canonical(COMPANY.domain, path)

@@ -1,13 +1,4 @@
-/**
- * Navigation and the footer sitemap — design.md, Navigation and Footer.
- *
- * A "menu" entry renders a mega panel on desktop and a grouped block in the
- * full-screen drawer; every child is a real link, so the nav degrades to a
- * plain list of links with JavaScript off.
- *
- * Notes on children carry data — the sector, the shape, the coverage — never a
- * category word. design.md bans `WHAT WE DO` and its relatives.
- */
+
 
 import { CASES } from '@/data/work'
 import { PRACTICES } from '@/data/practices'
@@ -216,11 +207,7 @@ export const FOOTER_LINKS: Array<{ name: string; links: Array<[string, string]> 
   },
 ]
 
-/**
- * The 404's recovery index — design.md, Error pages. Every top-level route with
- * its own one-line note, so a visitor lands on what they were reaching for
- * rather than on the front door.
- */
+
 export const ROUTE_INDEX: Array<[string, string, string]> = [
   [ROUTES.home, 'Home', 'The capability matrix and what runs in production'],
   [ROUTES.services, 'Services', 'Seven engineering practices and the cloud under them'],

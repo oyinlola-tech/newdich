@@ -143,9 +143,7 @@ export default function LanPage() {
         </div>
       </section>
 
-      {/* The LAN site labels these as projections rather than results, and so
-          does this page. design.md forbids presenting a projection as an
-          outcome. */}
+      
       <section className="section section--alt">
         <div className="wrap">
           <Marker label="Worked examples" note="Projections, not results" />

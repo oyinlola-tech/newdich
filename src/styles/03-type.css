@@ -1,8 +1,4 @@
-/* ==========================================================================
-   03 · Type                                              design.md — Typography
-   Anybody displays (wide, industrial — panel legend). Public Sans reads
-   (civic, rationalist). Martian Mono counts.
-   ========================================================================== */
+
 h1,h2,h3,h4,h5{
   font-family:var(--display);
   font-weight:700;
@@ -20,8 +16,7 @@ h1,h2,h3,h4,h5{
   letter-spacing:-.035em;line-height:.95;
 }
 
-/* The hero headline. Set far larger than anything else on the site, because
-   on a page whose job is one sentence the sentence is the design. */
+
 .display-hero{
   font-family:var(--display);font-weight:700;
   font-variation-settings:'wdth' 112;
@@ -52,7 +47,7 @@ p{margin:0;text-wrap:pretty}
 
 .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
 
-/* The mono label. The only uppercase on the site. */
+
 .label{
   display:inline-flex;align-items:center;gap:var(--s2);
   font-family:var(--mono);font-size:.6875rem;font-weight:500;
@@ -64,8 +59,7 @@ p{margin:0;text-wrap:pretty}
 .label--amber{color:var(--signal)}
 .label b{font-weight:500;color:var(--signal)}
 
-/* Section marker: a label, a rule, and a data note on the right.
-   design.md — labels carry data, never a category. */
+
 .marker{
   display:flex;align-items:center;gap:var(--s4);
   padding-bottom:var(--s3);margin-bottom:var(--s6);
@@ -74,9 +68,7 @@ p{margin:0;text-wrap:pretty}
 .marker .label{color:var(--text)}
 .marker .marker-note{margin-left:auto;text-align:right}
 
-/* Two mono labels on one rail need about 40 characters of room between them.
-   Under that they interleave into each other's wraps, so the note drops to
-   its own line and keeps its left edge. */
+
 @media (max-width:700px){
   .marker{flex-wrap:wrap;gap:var(--s1) var(--s4)}
   .marker .marker-note{margin-left:0;text-align:left;flex-basis:100%}

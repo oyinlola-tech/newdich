@@ -28,9 +28,7 @@ export default function ContactPage() {
         <div className="wrap">
           <div className="grid">
             <div className="span-7">
-              {/* The contact page's CTA is the form itself. A page that already
-                  is the action does not need a band telling you to take it —
-                  design.md, Call to action. */}
+              
               <Marker label="Project enquiry" note="Reply within 24 hours" />
               <ContactForm />
             </div>

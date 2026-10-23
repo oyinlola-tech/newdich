@@ -1,16 +1,4 @@
-/**
- * Case studies.
- *
- * design.md, Do's and Don'ts: no client names, no logos, no invented outcome
- * figures. Each of these describes a system Newdich has built, the sector it
- * was built for, and the engineering decisions behind it. Where a number
- * appears it is either the company's own published figure or a property of the
- * system itself (a polling interval, a batch size), never an invented business
- * result.
- *
- * When a client signs off on being named, add `client` and a quote to the
- * entry and the template will render it.
- */
+
 
 import { caseUrl, type PracticeSlug } from '@/lib/routes'
 import type { ArtKey } from '@/lib/art'

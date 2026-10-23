@@ -1,11 +1,4 @@
-/* ==========================================================================
-   15 · Error pages                                   design.md — Error pages
 
-   The 404 is an instrument reporting a real reading: signal lost. The playful
-   and game-shaped 404s that dominate 404s.design are wrong here — a company
-   whose argument is that its systems stay correct when the power fails does
-   not answer its own broken link with a cartoon.
-   ========================================================================== */
 .fault{padding-block:clamp(40px,6vw,80px)}
 
 .fault-panel{
@@ -25,7 +18,7 @@
   background:var(--bg);background-image:var(--backlight);
 }
 
-/* The code is the panel's legend, set at hero scale and tabular. */
+
 .fault-code{
   font-family:var(--display);font-weight:700;
   font-variation-settings:'wdth' 112;
@@ -36,9 +29,7 @@
 }
 .fault-say{display:grid;gap:var(--s4);align-content:center}
 
-/* The route the visitor asked for is the reading. It is stated in full, as
-   captured — the first thing a person needs is confirmation the machine heard
-   them correctly. */
+
 .fault-read{
   display:grid;gap:var(--s2);
   background:var(--bg-2);border:1px solid var(--line-2);border-radius:var(--r-2);
@@ -54,9 +45,7 @@
   padding:var(--s3) var(--s5);border-top:1px solid var(--line);
 }
 
-/* The recovery: the full ruled route index, not a lone "go home" button. This
-   is search-and-recover executed without a search box, which for fourteen
-   routes is the better instrument. */
+
 .fault-index{margin-top:clamp(32px,4vw,56px)}
 
 @media (max-width:900px){

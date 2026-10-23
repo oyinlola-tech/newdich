@@ -1,24 +1,13 @@
 'use client'
 
-/**
- * The instrument shelf — four systems reporting at once, across the page.
- *
- * design.md, Elevation & Depth: one requestAnimationFrame loop on a ~8s cycle,
- * paused when off-screen, when the tab is hidden, and under
- * prefers-reduced-motion — where the composed static frame still reads
- * correctly. The values below are the frame that ships in the markup, so with
- * JavaScript off the rig is a still photograph rather than an empty one.
- *
- * Every figure here is a property of the system being drawn — a meter count, a
- * ticket number, a settlement window — not an invented business result.
- */
+
 
 import { useEffect, useRef, useState } from 'react'
 
 import { Clock } from '@/components/Clock'
 import { Dot, Label } from '@/components/ui'
 
-/** The composed frame: what the rig reads before, and without, the loop. */
+
 const FRAME = {
   kwh: 4128.6,
   online: 1284,
@@ -54,8 +43,7 @@ export function Console({ layout = 'shelf' }: { layout?: 'shelf' | 'rack' }) {
 
     const loop = (t: number) => {
       if (start === 0) start = t
-      /* One ~8s cycle. Everything on the rig is a function of its phase, so
-         the four panels stay in step with each other. */
+      
       const phase = ((t - start) / 8000) % 1
       const wave = Math.sin(phase * Math.PI * 2)
 
@@ -116,7 +104,7 @@ export function Console({ layout = 'shelf' }: { layout?: 'shelf' | 'rack' }) {
       </div>
 
       <div className="console-grid">
-        {/* 1 — metering */}
+        
         <section className="panel">
           <header className="panel-head">
             <Label>Consumption · feeder 04</Label>
@@ -135,7 +123,7 @@ export function Console({ layout = 'shelf' }: { layout?: 'shelf' | 'rack' }) {
           </Label>
         </section>
 
-        {/* 2 — the queue board */}
+        
         <section className="panel">
           <header className="panel-head">
             <Label>Smart queue · public office</Label>
@@ -158,7 +146,7 @@ export function Console({ layout = 'shelf' }: { layout?: 'shelf' | 'rack' }) {
           </div>
         </section>
 
-        {/* 3 — LAN point of sale */}
+        
         <section className="panel">
           <header className="panel-head">
             <Label>LAN point of sale</Label>
@@ -181,7 +169,7 @@ export function Console({ layout = 'shelf' }: { layout?: 'shelf' | 'rack' }) {
           <Label>Runs on the merchant’s own network</Label>
         </section>
 
-        {/* 4 — the reconciliation ledger */}
+        
         <section className="panel">
           <header className="panel-head">
             <Label>Reconciliation</Label>

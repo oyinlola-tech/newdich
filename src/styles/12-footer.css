@@ -1,28 +1,19 @@
-/* ==========================================================================
-   12 · Footer                                             design.md — Footer
 
-   Large type over grid, dark, flat. Four rails: a status reading, the sitemap
-   beside the direct channels, the wordmark, the legal line. Cards and
-   illustration are banned everywhere else in this system and do not get an
-   exemption at the bottom of the page.
-   ========================================================================== */
 .foot{
   border-top:1px solid var(--line);
   background:var(--bg-2);
   margin-top:clamp(48px,7vw,88px);
 }
 
-/* --- 1 · the status rail --------------------------------------------------- */
+
 .foot-status{
   display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3) var(--s6);
   padding-block:var(--s4);border-bottom:1px solid var(--line);
 }
 .foot-status .clock{margin-left:auto}
 
-/* --- 2 · the sitemap and the direct channels ------------------------------- */
-/* 8/4, because a wall of four equal link columns says the same thing about
-   every part of the site. The channels are what somebody at the bottom of a
-   page is usually looking for. */
+
+
 .foot-main{
   display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);
   gap:var(--s8) var(--gutter);
@@ -41,8 +32,7 @@
 }
 .foot-col a:hover{color:var(--signal)}
 
-/* The direct block sits in its own well so it reads as equipment rather than
-   as a fifth link column. */
+
 .foot-direct{
   display:grid;gap:var(--s3);align-content:start;align-self:start;
   padding:var(--s5);
@@ -59,7 +49,7 @@
 .foot-line:hover{color:var(--signal);border-color:var(--signal)}
 .foot-direct .btn{margin-top:var(--s2);justify-content:space-between}
 
-/* The disclosure, under 900px only — see FooterGroup. */
+
 .foot-fold{
   display:flex;align-items:center;justify-content:space-between;gap:var(--s4);
   width:100%;min-height:48px;cursor:pointer;text-align:left;
@@ -77,20 +67,17 @@
 .foot-fold:hover .foot-fold-mark::before,
 .foot-fold:hover .foot-fold-mark::after{background:var(--signal)}
 
-/* --- 3 · the wordmark ------------------------------------------------------ */
-/* Used once, at the one place on the site where a purely typographic gesture
-   costs no information. --line coloured: a nameplate stamped into the
-   enclosure, not a headline. */
+
+
 .foot-mark{
   display:block;width:100%;
   padding-top:var(--s5);border-top:1px solid var(--line);
   color:var(--line);
 }
-/* The SVG carries its own textLength, so it fills the page at every width
-   rather than being clamped to one that is right at exactly one of them. */
+
 .wordmark{display:block;width:100%;height:auto;user-select:none}
 
-/* --- 4 · the legal rail ---------------------------------------------------- */
+
 .foot-legal{
   display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3) var(--s6);
   padding-block:var(--s5);
@@ -100,9 +87,7 @@
 .foot-legal a.label:hover{color:var(--signal)}
 .foot-socials{display:flex;flex-wrap:wrap;gap:var(--s2) var(--s5);margin-left:auto}
 
-/* --------------------------------------------------------------------------
-   Responsive
-   -------------------------------------------------------------------------- */
+
 @media (max-width:1080px){
   .foot-main{grid-template-columns:minmax(0,1fr);gap:var(--s7)}
   .foot-direct{order:-1}

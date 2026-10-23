@@ -18,11 +18,7 @@ export const metadata = pageMeta({
   image: shotUrl('lecture3.jpg'),
 })
 
-/**
- * An ImageGallery with every photograph declared, so the pictures are
- * indexable in their own right rather than being twelve anonymous <img> tags
- * inside a scroller.
- */
+
 const galleryJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ImageGallery',

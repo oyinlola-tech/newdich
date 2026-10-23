@@ -1,18 +1,11 @@
-/**
- * The four structures — panel, rack, index, spec — and the small parts they
- * are built from. design.md, Layout: cards as a uniform repeating grid unit do
- * not exist in this system, so there is no Card here to import.
- */
+
 
 import Link from 'next/link'
 import { Fragment, type ReactNode } from 'react'
 
-/* --- the mark's atom ------------------------------------------------------ */
 
-/**
- * The module: which cells of the mark's 2x2 are lit. The same construction
- * every time, a different facet lit each time.
- */
+
+
 export function Glyph({ cells, size }: { cells: number[]; size?: 'sm' | 'lg' }) {
   const cls = size ? `glyph glyph--${size}` : 'glyph'
   return (
@@ -24,10 +17,7 @@ export function Glyph({ cells, size }: { cells: number[]; size?: 'sm' | 'lg' }) 
   )
 }
 
-/**
- * A status mark. There is no spare colour for state, so state is form: solid
- * means running, hollow means held. The word always travels with it.
- */
+
 export function Dot({ held }: { held?: boolean }) {
   return <span className={held ? 'dot dot--held' : 'dot'} aria-hidden="true" />
 }
@@ -79,7 +69,7 @@ export function Arrow({ children }: { children: ReactNode }) {
   )
 }
 
-/* --- buttons -------------------------------------------------------------- */
+
 
 export function Btn({
   href,
@@ -124,9 +114,9 @@ export function Btn({
   )
 }
 
-/* --- panel ---------------------------------------------------------------- */
 
-/** The only container. Header rail (mono label left, status right), body. */
+
+
 export function Panel({
   label,
   status,
@@ -162,9 +152,9 @@ export function Callout({ children }: { children: ReactNode }) {
   return <div className="callout">{children}</div>
 }
 
-/* --- section furniture ---------------------------------------------------- */
 
-/** A label, a rule, and a data note on the right. Labels carry data. */
+
+
 export function Marker({ label, note }: { label: ReactNode; note?: ReactNode }) {
   return (
     <div className="marker">
@@ -183,12 +173,9 @@ export function SectionHead({ title, copy }: { title: ReactNode; copy?: ReactNod
   )
 }
 
-/* --- index ---------------------------------------------------------------- */
 
-/**
- * A list of twelve things is an index, not twelve cards: full-width
- * hairline-ruled rows with a left identifier column.
- */
+
+
 export function Index({ children }: { children: ReactNode }) {
   return <div className="index">{children}</div>
 }
@@ -224,9 +211,9 @@ export function IndexRow({
   )
 }
 
-/* --- spec ----------------------------------------------------------------- */
 
-/** A two-column label/value table for facts. A real table, with scope. */
+
+
 export function Spec({ rows }: { rows: Array<[string, ReactNode]> }) {
   return (
     <table className="spec">
@@ -268,7 +255,7 @@ export function Stats({ items }: { items: Array<[string, string]> }) {
   )
 }
 
-/** Fact lists — the module is the bullet. */
+
 export function Facts({ items }: { items: ReactNode[] }) {
   return (
     <ul className="facts">
@@ -279,7 +266,7 @@ export function Facts({ items }: { items: ReactNode[] }) {
   )
 }
 
-/** Numbered because the steps are an actual sequence. */
+
 export function Steps({ items }: { items: Array<[string, string]> }) {
   return (
     <div className="steps">
@@ -296,7 +283,7 @@ export function Steps({ items }: { items: Array<[string, string]> }) {
   )
 }
 
-/** Native <details>, so the FAQ needs no JavaScript. */
+
 export function Faq({ items }: { items: Array<[string, string]> }) {
   return (
     <div className="faq">
@@ -310,10 +297,7 @@ export function Faq({ items }: { items: Array<[string, string]> }) {
   )
 }
 
-/**
- * The degradation strip — what happens when power or network fails. It is the
- * differentiator, so it gets a fixed place in the layout.
- */
+
 export function Degrade({ items }: { items: Array<[string, string]> }) {
   return (
     <div className="degrade">

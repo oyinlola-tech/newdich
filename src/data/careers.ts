@@ -1,10 +1,4 @@
-/**
- * Open roles.
- *
- * These are written as example roles matching the practices the company runs.
- * Confirm which are actually open — and the terms — before launch. See the
- * README, "Placeholders to confirm".
- */
+
 
 export const WHY_HERE: Array<[string, string]> = [
   [

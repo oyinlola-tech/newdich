@@ -1,8 +1,4 @@
-/* ==========================================================================
-   08 · Index                                              design.md — Layout
-   A list of twelve things is an index, not twelve cards: full-width
-   hairline-ruled rows with a left identifier column.
-   ========================================================================== */
+
 .index{display:grid;border-top:1px solid var(--line)}
 
 .index-row{
@@ -25,7 +21,7 @@ a.index-row:hover .index-title{color:var(--signal)}
 .index-aside{align-self:center;justify-self:end;text-align:right;
              display:flex;align-items:center;gap:var(--s4)}
 
-/* The older `rows` construction, same shape */
+
 .rows{display:grid;border-top:1px solid var(--line)}
 .row{
   display:grid;grid-template-columns:minmax(120px,1.2fr) minmax(0,5fr) auto;

@@ -1,20 +1,6 @@
 'use client'
 
-/**
- * The contact form — design.md, Components.
- *
- * Label above input, error stated below in words. There is no red to use, so
- * an invalid field is marked by its blue focus border and the message says
- * what is wrong. Nothing here depends on hue alone.
- *
- * It posts to `/api/contact`, a platform function that holds the Resend key.
- * The key is never in this bundle: a Resend key is a secret, and one shipped
- * to the browser can be lifted out and used to send mail as newdich.tech.
- *
- * Validation runs here as a courtesy to the person filling the form and again
- * on the server as the actual check, because nothing stops a post that never
- * went near this component.
- */
+
 
 import { useState } from 'react'
 
@@ -42,7 +28,7 @@ export function ContactForm() {
       org: String(data.get('org') ?? '').trim(),
       practice: String(data.get('practice') ?? '').trim(),
       brief: String(data.get('brief') ?? '').trim(),
-      /* The honeypot travels with the rest; the server decides what it means. */
+      
       company: String(data.get('company') ?? ''),
     }
 
@@ -88,8 +74,7 @@ export function ContactForm() {
       form.reset()
       setState('sent')
     } catch {
-      /* Offline, blocked, or the endpoint is not deployed yet. Say so, and
-         hand over the address rather than losing what they wrote. */
+      
       setFailure('The message could not be sent — you may be offline.')
       setState('failed')
     }
@@ -159,9 +144,7 @@ export function ContactForm() {
         {errors.brief ? <p className="field-err">{errors.brief}</p> : null}
       </div>
 
-      {/* The honeypot. No person sees it, no keyboard reaches it, and no
-          screen reader announces it — so anything in it came from something
-          filling every input it found. */}
+      
       <div className="hp" aria-hidden="true">
         <label htmlFor="f-company">Company (leave this empty)</label>
         <input id="f-company" name="company" type="text" tabIndex={-1} autoComplete="off" />

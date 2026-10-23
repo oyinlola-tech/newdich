@@ -25,11 +25,7 @@ import { Nav } from '@/components/Nav'
 import { Reveal } from '@/components/Reveal'
 import { ThemeScript } from '@/components/ThemeScript'
 
-/**
- * Anybody displays, Public Sans reads, Martian Mono counts — design.md,
- * Typography. Three variable families, loaded once, with the axes the sheets
- * actually use.
- */
+
 const FONTS =
   'https://fonts.googleapis.com/css2' +
   '?family=Anybody:wdth,wght@100..150,400..800' +
@@ -64,23 +60,14 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    /*
-     * `suppressHydrationWarning` covers exactly one thing: ThemeScript runs
-     * before hydration and writes `class="js"` and `data-theme` onto this
-     * element, so the client necessarily sees attributes the server HTML did
-     * not have. That mismatch is the point — the alternative is a flash of the
-     * wrong theme while React catches up. It suppresses only this element's
-     * own attributes, not anything nested inside it, so a real mismatch
-     * further down the tree still reports.
-     */
-    <html lang="en-NG" suppressHydrationWarning>
+    
+    <html lang="en-NG" className="js" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="stylesheet" href={FONTS} />
         <ThemeScript />
-        {/* Through the same component every other schema uses, so the
-            escaping is decided in one place and cannot drift. */}
+        
         <JsonLd data={ORG_JSONLD} />
       </head>
       <body>

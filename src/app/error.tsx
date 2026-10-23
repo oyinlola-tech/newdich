@@ -7,15 +7,7 @@ import { ROUTES } from '@/lib/routes'
 import { Btn, Dot, Label } from '@/components/ui'
 import { Clock } from '@/components/Clock'
 
-/**
- * The 500 — design.md, Error pages. The same panel as the 404 with the reading
- * changed to a service fault, and the recovery reduced to a retry and the
- * contact channels.
- *
- * It states that the error was logged, because on this site that is true: the
- * boundary reports it to the console where a browser or an error reporter can
- * pick it up.
- */
+
 export default function Error({
   error,
   reset,

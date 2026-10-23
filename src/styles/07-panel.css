@@ -1,9 +1,4 @@
-/* ==========================================================================
-   07 · Panel                                          design.md — Components
-   The panel is the only container. Header rail (mono label left, status
-   right), body, optional footer rail. Cards, as a uniform repeating grid
-   unit, do not exist in this system.
-   ========================================================================== */
+
 .panel{
   position:relative;
   background:var(--surface);
@@ -24,12 +19,11 @@
 }
 a.panel:hover,.panel--act:hover{border-color:var(--signal);transform:translateY(-1px)}
 
-/* A well: a recessed area inside a panel */
+
 .well{background:var(--bg);border:1px solid var(--line-2);border-radius:var(--r-2);
       padding:var(--s4)}
 
-/* `tile` is the panel under its older name, kept so page modules read the
-   same. It behaves identically. */
+
 .tile{
   display:flex;flex-direction:column;gap:var(--s3);
   background:var(--surface);border:1px solid var(--line);
@@ -43,26 +37,24 @@ a.tile:hover{border-color:var(--signal);transform:translateY(-1px);box-shadow:va
 .tile p{color:var(--text-2);font-size:.9375rem}
 .tile-art{margin:calc(var(--s2) * -1) 0 var(--s2)}
 
-/* The featured panel gets the hairline gradient edge, and nothing else does */
+
 .tile--feature{
   background:linear-gradient(var(--surface),var(--surface)) padding-box,
              linear-gradient(120deg,var(--line),var(--signal)) border-box;
   border:1px solid transparent;
 }
 
-/* Racks of panels. 1 and 2 up only — 3 and 4 up become an index (08). */
+
 .cards{display:grid;gap:var(--gutter)}
 .cards--1{grid-template-columns:minmax(0,1fr)}
 .cards--2{grid-template-columns:repeat(2,minmax(0,1fr))}
 
-/* The bento — the home page instrument wall. Sized by importance, not
-   uniformity, which is the whole point of it. */
+
 .bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gutter)}
 .bento>*{grid-column:span 1 / span 1}
 .bento .b-2{grid-column:span 2 / span 2}
 
-/* Zig-zag feature row — a case study, art on one side, prose on the other.
-   design.md bans three-equal-column feature grids; this is the replacement. */
+
 .feature{
   display:grid;grid-template-columns:repeat(12,minmax(0,1fr));
   gap:var(--s6) var(--gutter);align-items:center;
@@ -90,7 +82,7 @@ a.feature:hover .device{border-color:var(--signal)}
 .person .role{font-family:var(--mono);font-size:.6875rem;font-variation-settings:'wdth' 87.5;
               letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin:2px 0 var(--s2)}
 
-/* The closing band */
+
 .cta-band{border-top:1px solid var(--line);background:var(--bg-2);
           padding-block:clamp(48px,7vw,80px)}
 .cta-inner{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));

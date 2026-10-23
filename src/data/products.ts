@@ -1,6 +1,6 @@
-/** Platforms the company owns, and the product library it deploys from. */
 
-/** Ansofra facts as published on Packagist and in the company's own docs. */
+
+
 export const ANSOFRA = {
   package: 'newdich/ansofra',
   packagist: 'https://packagist.org/packages/newdich/ansofra',
@@ -73,7 +73,7 @@ export const APPSTORE_ITEMS = [
   'Bots',
 ]
 
-/** The product library the company lists on its site. */
+
 export const PRODUCTS: Array<[string, string, string, number[]]> = [
   ['Framework', 'Ansofra', 'A web development framework built on the CQRS pattern.', [0]],
   ['Library', 'NAMY CSS', 'A predefined-class library for building front-ends fast.', [1]],

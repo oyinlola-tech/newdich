@@ -6,13 +6,10 @@ import { PRACTICES } from '@/data/practices'
 import { COMPANY } from '@/lib/site'
 import { ROUTES, canonical } from '@/lib/routes'
 
-/** Required by `output: 'export'` — the sitemap is generated once, at build. */
+
 export const dynamic = 'force-static'
 
-/**
- * Every route this site prerenders, from the same table the links come from —
- * design.md, Routes and output. A path is never typed twice.
- */
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
     ...Object.values(ROUTES),

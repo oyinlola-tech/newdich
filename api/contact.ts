@@ -1,77 +1,29 @@
-/**
- * The contact endpoint — the one piece of server on this site.
- *
- * The site itself is still a static export (`output: 'export'`); this is a
- * standalone platform function deployed alongside it, and it exists for one
- * reason: a Resend API key is a secret. There is no publishable browser key.
- * A key shipped in client JavaScript can be lifted out of the bundle by
- * anybody who opens the network tab, and then anybody can send mail as
- * newdich.tech — which ends with the domain in a blocklist. So the key lives
- * here, in an environment variable the browser never sees.
- *
- * Written against the Web-standard Request/Response signature, which is what
- * Vercel Functions, Netlify Functions and Cloudflare Pages Functions all
- * speak. See the README for the per-host wiring.
- *
- * The threat model is short and worth stating, because every check below
- * answers one line of it. This endpoint is unauthenticated, publicly
- * reachable, and it spends money and reputation on someone else's behalf: it
- * sends mail. So the questions are
- *
- *   - can a stranger make it send a lot of mail?   -> rate limits
- *   - can a stranger make it send mail as someone? -> header and HTML escaping
- *   - can a stranger make it read a large body?    -> size caps, before parsing
- *   - can another site make a visitor's browser
- *     post to it without them knowing?             -> content-type and origin
- *
- * Env:
- *   RESEND_API_KEY   required — the secret key
- *   CONTACT_TO       optional — where enquiries land (default newdichngr@gmail.com)
- *   CONTACT_FROM     optional — a verified Resend sender on your own domain
- *   CONTACT_ORIGINS  optional — comma-separated origins allowed to post
- */
+
 
 import { Resend } from 'resend'
 
 const TO = process.env.CONTACT_TO ?? 'newdichngr@gmail.com'
-/* Resend will only send from a domain you have verified. Until newdich.tech is
-   verified in the Resend dashboard, their shared onboarding sender works. */
+
 const FROM = process.env.CONTACT_FROM ?? 'Newdich site <onboarding@resend.dev>'
 
-/** Caps, so a malformed or hostile post cannot arrive as a megabyte of body. */
+
 const LIMITS = { name: 120, email: 200, org: 160, practice: 120, brief: 5000 } as const
 
 type Field = keyof typeof LIMITS
 
-/**
- * The whole request body, capped before it is read rather than after. The
- * field caps above only apply once the body has already been pulled into
- * memory and parsed, which is too late to be a defence — the parsing is the
- * attack. 16 KB is comfortably more than every field plus JSON overhead.
- */
+
 const MAX_BODY = 16 * 1024
 
-/**
- * Rate limits, per client address, over a rolling window.
- *
- * A caveat stated plainly: this counter lives in the memory of one function
- * instance. A platform that runs several instances, or that recycles a cold
- * one, hands an attacker a fresh allowance each time — so this is a speed
- * bump, not a wall. It is still worth having, because it stops the case that
- * actually happens (one script, one address, in a loop) at close to zero cost.
- * If this endpoint ever draws real abuse, the durable version of it belongs in
- * front of the function: Vercel's firewall, a Cloudflare rate-limiting rule,
- * or a shared store such as Upstash.
- */
+
 const RATE = { windowMs: 60 * 60 * 1000, perAddress: 5, burst: 2, burstMs: 60 * 1000 }
 
-/** A ceiling on the endpoint as a whole, which no spread of addresses evades. */
+
 const GLOBAL = { windowMs: 60 * 60 * 1000, max: 60 }
 
 const hits = new Map<string, number[]>()
 const globalHits: number[] = []
 
-/** Drops the timestamps that have aged out, and returns what is left. */
+
 const recent = (stamps: number[], now: number, windowMs: number) => {
   const cutoff = now - windowMs
   let i = 0
@@ -80,21 +32,14 @@ const recent = (stamps: number[], now: number, windowMs: number) => {
   return stamps
 }
 
-/**
- * The client address, taken from whichever header the host in front of us
- * sets. These headers are only trustworthy because a platform proxy rewrites
- * them; running this behind nothing would make them a claim by the client and
- * the per-address limit would be bypassed by anyone who sets one. That is
- * acceptable here — it is defence in depth, and the global ceiling does not
- * depend on the address being honest.
- */
+
 const addressOf = (request: Request) => {
   const h = request.headers
   const forwarded = h.get('x-forwarded-for')?.split(',')[0]?.trim()
   return h.get('cf-connecting-ip') ?? h.get('x-real-ip') ?? forwarded ?? 'unknown'
 }
 
-/** Keeps the map from growing without bound on a long-lived instance. */
+
 const sweep = (now: number) => {
   if (hits.size < 5000) return
   for (const [key, stamps] of hits) {
@@ -128,12 +73,7 @@ const takeToken = (address: string): Verdict => {
   return { ok: true }
 }
 
-/**
- * Origins allowed to post. Set `CONTACT_ORIGINS` on the host to the site's own
- * origin — comma-separated if there is more than one, a preview domain say.
- * Left unset the origin check is skipped rather than guessed at, so a fresh
- * deployment is not broken by a hostname this file could not know.
- */
+
 const ALLOWED_ORIGINS = (process.env.CONTACT_ORIGINS ?? '')
   .split(',')
   .map((s) => s.trim())
@@ -145,22 +85,14 @@ const json = (status: number, body: object, headers: Record<string, string> = {}
     headers: {
       'content-type': 'application/json',
       'cache-control': 'no-store',
-      /* This response is JSON and is never a document. Saying so stops a
-         browser sniffing it into something it is willing to execute. */
+      
       'x-content-type-options': 'nosniff',
       'referrer-policy': 'no-referrer',
       ...headers,
     },
   })
 
-/**
- * Everything that reaches the mail body is escaped. The message is assembled
- * from what a stranger typed into a public form, so it is treated as hostile
- * text rather than as markup — an unescaped `<` here is how a contact form
- * becomes a phishing relay. The apostrophe is in the list because these values
- * land beside quoted attributes in the table below, and the HTML parser doing
- * the reading belongs to a mail client this file does not get to choose.
- */
+
 const esc = (s: string) =>
   s
     .replace(/&/g, '&amp;')

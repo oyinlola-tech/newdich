@@ -2,16 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 
-/**
- * The hero arc — design.md, Hero.
- *
- * A dot-matrix arc built from the mark's module, painted to a canvas and
- * masked (in CSS) to dissolve top and bottom so it reads as a horizon under
- * the sentence rather than a ring around it.
- *
- * Opacity falloff only: no glow, no blur, no second hue. Every dot is the
- * signal colour read off the live computed style, so it follows the theme.
- */
+
 export function HeroArc() {
   const ref = useRef<HTMLCanvasElement>(null)
 
@@ -42,10 +33,7 @@ export function HeroArc() {
         .getPropertyValue('--signal')
         .trim() || '#3B9BFF'
 
-      /* The arc sits low and wide: its centre is below the panel, so what
-         shows is the top of a very large circle. Both the centre and the
-         radius are driven by the width, so the arc keeps the same shape
-         whether the hero is 600px tall or 1400. */
+      
       const cx = w * 0.5
       const cy = h + w * 0.34
       const radius = w * 0.78
@@ -56,8 +44,7 @@ export function HeroArc() {
 
       for (let ring = 0; ring < rings; ring += 1) {
         const r = radius - ring * gap
-        /* Arc length fixed in pixels, so the dot spacing stays even as the
-           ring shrinks rather than crowding toward the middle. */
+        
         const steps = Math.max(24, Math.round((Math.PI * r) / gap))
         for (let i = 0; i <= steps; i += 1) {
           const angle = Math.PI + (i / steps) * Math.PI
@@ -65,8 +52,7 @@ export function HeroArc() {
           const y = cy + Math.sin(angle) * r
           if (x < -20 || x > w + 20 || y < -20 || y > h + 20) continue
 
-          /* Falloff: brightest at the crown of the arc and on the outer ring,
-             dissolving toward the ends and inward. */
+          
           const fromCrown = Math.abs(x - cx) / (w * 0.62)
           const alpha =
             0.5 * (1 - ring / rings) * Math.max(0, 1 - fromCrown * fromCrown) * 0.85
@@ -76,7 +62,7 @@ export function HeroArc() {
           ctx.fillStyle = signal
           ctx.beginPath()
           const size = module * (1 - ring / (rings * 2.4))
-          /* The module's own 27.3% radius, drawn at dot scale. */
+          
           ctx.roundRect(x - size / 2, y - size / 2, size, size, size * 0.273)
           ctx.fill()
         }
@@ -92,8 +78,7 @@ export function HeroArc() {
     schedule()
     const ro = new ResizeObserver(schedule)
     if (canvas.parentElement) ro.observe(canvas.parentElement)
-    /* The dots are painted in the theme's signal colour, so a theme change
-       has to repaint them. */
+    
     const mo = new MutationObserver(schedule)
     mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
     const mq = window.matchMedia('(prefers-color-scheme: light)')

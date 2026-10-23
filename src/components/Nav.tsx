@@ -1,19 +1,6 @@
 'use client'
 
-/**
- * The rail — design.md, Navigation.
- *
- * Sticky, inset from the viewport by the page gutter so it reads as a fitted
- * instrument bezel, and condensed once the page has moved. Four of
- * navbar.gallery's nine patterns earn a place: the sticky rail, the mega
- * panel, the full-screen drawer, and breadcrumbs (rendered per page, not
- * here). The announcement bar is promotional and search over fourteen routes
- * is a box that answers questions nobody asked.
- *
- * Every child of a mega panel is a real <a href>. With JavaScript off the
- * triggers swap for the links behind them (see 05-nav.css) and the footer
- * sitemap carries the rest.
- */
+
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -39,7 +26,7 @@ const Chevron = () => (
   </svg>
 )
 
-/** Which nav key owns this path, so the rail can mark the current page. */
+
 function activeKey(pathname: string): string | null {
   const p = pathname.replace(/\/+$/, '') || '/'
   if (p === '/') return 'home'
@@ -61,14 +48,7 @@ export function Nav() {
   const drawerRef = useRef<HTMLDivElement>(null)
   const hoverTimer = useRef<number | null>(null)
 
-  /* Hover opens a panel on a mouse, and only on a mouse. On a touch screen
-     the same gesture is a tap, and a panel that opens under a finger on its
-     way to a link is a panel that steals the tap.
-     
-     The test is the pointer event's own `pointerType` rather than a
-     `(hover: hover)` media query: the event names the device that actually
-     generated it, where the media query is a guess that a hybrid laptop, a
-     docked tablet or a headless browser all get wrong. */
+  
   const clearHoverTimer = () => {
     if (hoverTimer.current !== null) {
       window.clearTimeout(hoverTimer.current)
@@ -82,8 +62,7 @@ export function Nav() {
     setOpenMenu(key)
   }, [])
 
-  /* A short grace period on the way out, so the diagonal travel from the
-     trigger down into the panel does not close what it is travelling to. */
+  
   const onItemLeave = useCallback((pointerType: string) => {
     if (pointerType === 'touch') return
     clearHoverTimer()
@@ -92,8 +71,7 @@ export function Nav() {
 
   useEffect(() => clearHoverTimer, [])
 
-  /* The condense. Passive listener, and a single boolean so the rail's
-     transition runs once rather than on every frame of a scroll. */
+  
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
     onScroll()
@@ -101,15 +79,13 @@ export function Nav() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  /* A route change closes whatever was open. */
+  
   useEffect(() => {
     setOpenMenu(null)
     setDrawer(false)
   }, [pathname])
 
-  /* Escape closes the open panel, then the drawer. Outside click closes the
-     panel. Focus leaving the rail closes it too, which is what keyboard users
-     expect when they tab past a menu. */
+  
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return
@@ -128,18 +104,22 @@ export function Nav() {
     }
   }, [openMenu, drawer])
 
-  /* The drawer takes the viewport, so the page behind it must not scroll. */
+  
   useEffect(() => {
     if (!drawer) return
-    const prev = document.body.style.overflow
+    const scrollbar = window.innerWidth - document.documentElement.clientWidth
+    const prevOverflow = document.body.style.overflow
+    const prevPadding = document.body.style.paddingRight
+    document.body.style.paddingRight = `${scrollbar}px`
     document.body.style.overflow = 'hidden'
     drawerRef.current?.querySelector<HTMLElement>('a,button')?.focus()
     return () => {
-      document.body.style.overflow = prev
+      document.body.style.overflow = prevOverflow
+      document.body.style.paddingRight = prevPadding
     }
   }, [drawer])
 
-  /* Roving focus inside an open mega panel. */
+  
   const onMenuKey = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return
     const links = Array.from(
@@ -182,8 +162,7 @@ export function Nav() {
             ))}
           </nav>
 
-          {/* The rail's own reading. Labels carry data — a bezel with a
-              promotional strapline on it is a bezel that lies. */}
+          
           <div className="rail-read">
             <Label>
               <Dot />
@@ -215,9 +194,8 @@ export function Nav() {
         </div>
       </div>
 
-      {/* The full-screen drawer. A hamburger that opens a 280px column is a
-          phone-sized version of a desktop menu. */}
-      <div className="drawer" id="drawer" data-open={drawer ? 'true' : 'false'} ref={drawerRef} aria-hidden={!drawer}>
+      
+      <div className="drawer" id="drawer" data-open={drawer ? 'true' : 'false'} ref={drawerRef} aria-hidden={!drawer} onClick={(e) => { if (e.target === e.currentTarget) setDrawer(false) }}>
         <div className="drawer-bar">
           <Link className="brand" href="/">
             <Mark />
@@ -331,7 +309,7 @@ function NavEntry({
         {item.label}
         <Chevron />
       </button>
-      {/* The no-JS twin. 05-nav.css shows exactly one of the two. */}
+      
       <Link className="nav-link nav-link--nojs" href={item.href}>
         {item.label}
       </Link>
@@ -366,11 +344,7 @@ function NavEntry({
   )
 }
 
-/**
- * The theme control. It writes `data-theme` on the root and remembers the
- * choice; with nothing stored the OS setting wins, which is what the token
- * sheet already assumes.
- */
+
 function ThemeButton() {
   const [theme, setTheme] = useState<'light' | 'dark' | null>(null)
 
@@ -389,7 +363,7 @@ function ThemeButton() {
     try {
       window.localStorage.setItem('nd-theme', next)
     } catch {
-      /* Private mode. The page still works; the choice just does not persist. */
+      
     }
     setTheme(next)
   }

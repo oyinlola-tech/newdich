@@ -42,11 +42,7 @@ export const metadata = pageMeta({
 
 const instituteFaq = FAQ_GROUPS.find((g) => g.name === 'The Institute')
 
-/**
- * The Institute as an EducationalOrganization, with each track declared as a
- * Course it offers. Fees and cohort dates are not published, so no `offers`
- * block is emitted — a price of zero would be a lie and an empty one is noise.
- */
+
 const instituteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'EducationalOrganization',

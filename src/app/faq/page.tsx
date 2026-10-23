@@ -24,9 +24,7 @@ export default function FaqPage() {
       <JsonLd data={faqPage(everyQuestion)} />
       <JsonLd data={breadcrumbs([['Home', ROUTES.home], ['FAQ', ROUTES.faq]])} />
 
-      {/* A company page has no system to show, so it opens with its own spec
-          rather than an instrument. An instrument with no reading is
-          decoration — design.md, Overview. */}
+      
       <PageHero
         trail={[['/', 'Home'], [null, 'FAQ']]}
         label={`${total} questions · ${FAQ_GROUPS.length} groups`}

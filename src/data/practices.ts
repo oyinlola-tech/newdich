@@ -1,11 +1,4 @@
-/**
- * The seven engineering practices, in the order the company lists them.
- *
- * `glyph` is which cells of the mark's 2x2 module are lit for this practice —
- * the same construction every time, a different facet lit each time. It is the
- * practice's fingerprint across the whole site, so a visitor who clicks a row
- * in the capability matrix lands on the identifier they clicked.
- */
+
 
 import { practiceUrl, type PracticeSlug } from '@/lib/routes'
 import type { ArtKey } from '@/lib/art'
@@ -368,10 +361,7 @@ export const SECTORS: Array<[string, string]> = [
   ['Web3', 'Wallets, exchanges, P2P trading desks, DEX tooling and on-chain games.'],
 ]
 
-/**
- * The capability matrix. The gaps are deliberate: a matrix that is entirely
- * filled is a brochure — design.md, Components.
- */
+
 export const SECTOR_COLUMNS = ['Fintech', 'Gov', 'Education', 'Commerce', 'Web3'] as const
 
 export const MATRIX: Array<[PracticeSlug, boolean[]]> = [

@@ -1,11 +1,4 @@
-/**
- * The closing band — design.md, Call to action.
- *
- * A console, not a banner. cta.gallery sorts CTAs by mechanism; this site
- * ships button, form and navigation and refuses modal, pop-up, download,
- * newsletter and pricing. A promise in a CTA is either specific or absent, so
- * the reply commitment is stated in words.
- */
+
 
 import Link from 'next/link'
 

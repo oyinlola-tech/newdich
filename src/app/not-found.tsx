@@ -12,15 +12,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 }
 
-/**
- * The 404 — design.md, Error pages.
- *
- * 404s.design is dominated by playful and game-shaped error pages. They are
- * wrong here: a company whose argument is that its systems stay correct when
- * the power fails does not answer its own broken link with a cartoon. So the
- * 404 is an instrument reporting a real reading — signal lost — and the
- * recovery is the full route index rather than a lone "go home" button.
- */
+
 export default function NotFound() {
   return (
     <section className="fault">
@@ -28,8 +20,7 @@ export default function NotFound() {
         <div className="fault-panel">
           <div className="fault-bar">
             <Label>Route resolution</Label>
-            {/* State is form, not hue: hollow and still means held. The word
-                travels with the mark. */}
+            
             <Label>
               <Dot held />
               No route
@@ -66,8 +57,7 @@ export default function NotFound() {
           </div>
         </div>
 
-        {/* The recovery. Search-and-recover executed without a search box,
-            which for fourteen routes is the better instrument. */}
+        
         <div className="fault-index">
           <Marker label={`${ROUTE_INDEX.length} routes`} note="Every page on this site" />
           <Index>

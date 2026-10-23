@@ -1,14 +1,4 @@
-/**
- * The footer — design.md, Footer.
- *
- * Large type over grid, dark, flat. footer.design's other house styles —
- * cards, illustration — are banned elsewhere in this system and do not get an
- * exemption at the bottom of the page.
- *
- * Four rails: a status reading, the sitemap beside the direct channels, the
- * wordmark, and the legal line. It is also this site's no-JavaScript
- * navigation, which is why every link in it is a plain anchor.
- */
+
 
 import Link from 'next/link'
 
@@ -24,8 +14,7 @@ export function Footer() {
   return (
     <footer className="foot">
       <div className="wrap">
-        {/* 1 · the status rail. A footer that opens with a reading is
-            consistent with a site that opens every page with one. */}
+        
         <div className="foot-status">
           <Label accent>
             <Dot />
@@ -39,7 +28,7 @@ export function Footer() {
           <Clock />
         </div>
 
-        {/* 2 · the sitemap, and the direct channels beside it */}
+        
         <div className="foot-main">
           <nav className="foot-map" aria-label="Sitemap">
             {FOOTER_LINKS.map((group) => (
@@ -73,13 +62,12 @@ export function Footer() {
           </div>
         </div>
 
-        {/* 3 · the wordmark. Used once, --line coloured: a nameplate stamped
-            into the enclosure, not a headline. */}
+        
         <div className="foot-mark">
           <Wordmark text="NEWDICH" />
         </div>
 
-        {/* 4 · the legal rail */}
+        
         <div className="foot-legal">
           <Label>
             © {COMPANY.founded}–2026 {COMPANY.name}

@@ -1,19 +1,4 @@
-/**
- * Newdich LAN — the local internet business Newdich owns and operates.
- *
- * Everything here was taken from the product itself at https://lanv2.newdich.tech
- * on 2026-09-09: the copy from its own pages, and the package table from its
- * live `/api/getpackages` endpoint. Nothing on this page is invented.
- *
- * Two figures on the LAN site are worked examples rather than results, and it
- * labels them that way itself ("Projected revenue for a single territory",
- * "Example of how commission can grow with customer activity"). They are
- * carried here with the same label — design.md forbids presenting a projection
- * as an outcome.
- *
- * Pricing is set by Newdich LAN and can change. The page says so and links to
- * the live list rather than pretending a static site is the source of truth.
- */
+
 
 export const SITE = 'https://lanv2.newdich.tech'
 
@@ -24,7 +9,7 @@ export const SUMMARY =
   'protected territory, resells internet inside it, and we operate the platform, the billing ' +
   'and the support underneath.'
 
-/** The merchant programme, in its own words. */
+
 export const MERCHANT_STEPS: Array<[string, string]> = [
   [
     'Apply & get verified',
@@ -52,7 +37,7 @@ export const MERCHANT_PROMISES: Array<[string, string]> = [
   ['Fast payouts', 'Settled weekly, with the dashboard showing what is owed and why.'],
 ]
 
-/** The agent programme. */
+
 export const AGENT_SUMMARY =
   'Agents do not take a territory. They refer buyers with a code and earn commission on ' +
   'eligible plans, which suits campus reps, community promoters and anyone already selling ' +
@@ -87,11 +72,7 @@ export const CURRENCIES = [
   'US dollar',
 ]
 
-/**
- * The package table, verbatim from /api/getpackages. Coverage is a radius in
- * metres, population is the users a package is sized for, price is in naira.
- * Every tier is the same rate: NGN 3,650,000 per 300 m of coverage.
- */
+
 export const RATE_PER_STEP = 3_650_000
 export const STEP_METRES = 300
 
@@ -117,7 +98,7 @@ export const PACKAGES: Package[] = [
   { name: 'LAN C3KM', metres: 3000, people: 6000, naira: 36_500_000 },
 ]
 
-/** Worked examples published on the LAN site. Labelled, never presented as results. */
+
 export const MERCHANT_EXAMPLE: Array<[string, string]> = [
   ['Active customers', '128'],
   ['Average ARPU', '₦42,000'],
@@ -145,7 +126,7 @@ export const LAN_FAQ: Array<[string, string]> = [
   ],
 ]
 
-/** Naira, grouped, no decimals — these are whole-naira package prices. */
+
 export const naira = (amount: number) => `₦${amount.toLocaleString('en-NG')}`
 
 export const coverageLabel = (metres: number) =>

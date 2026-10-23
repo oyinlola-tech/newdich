@@ -1,16 +1,4 @@
-/**
- * Drawn product art — design.md, Do's and Don'ts.
- *
- * Every illustration on this site is one of the systems the company actually
- * ships, drawn as vector: a metering dashboard, a queue board, a POS terminal,
- * an exam screen, an exchange, a reconciliation ledger. Nothing here is stock
- * and nothing is decorative.
- *
- * They are inline SVG rather than files so they take their colour from the
- * theme tokens — `var(--signal)` inside an inline SVG resolves against the
- * page. All of them are drawn on a 400x240 canvas and scale to their
- * container.
- */
+
 
 import type { JSX, ReactNode } from 'react'
 
@@ -105,14 +93,12 @@ function Bar({
   return <rect x={x} y={y} width={w} height={h} rx={r} fill={fill} />
 }
 
-/** The outer enclosure every instrument is drawn inside. */
+
 function Frame() {
   return <P x={8} y={8} w={384} h={224} r={10} fill="var(--surface)" stroke="var(--line)" />
 }
 
-/* ------------------------------------------------------------------------
-   1 — Smart metering: the consumption dashboard
-   ------------------------------------------------------------------------ */
+
 
 function MeterDashboard() {
   const points = [30, 34, 28, 40, 46, 42, 52, 60, 55, 64, 72, 68, 78, 86, 80, 92]
@@ -168,9 +154,7 @@ function MeterDashboard() {
   )
 }
 
-/* ------------------------------------------------------------------------
-   2 — Smart queue: the counter board
-   ------------------------------------------------------------------------ */
+
 
 function QueueBoard() {
   const rows: Array<[string, string, boolean]> = [
@@ -228,9 +212,7 @@ function QueueBoard() {
   )
 }
 
-/* ------------------------------------------------------------------------
-   3 — LAN point of sale: the terminal
-   ------------------------------------------------------------------------ */
+
 
 function PosTerminal() {
   return (
@@ -268,9 +250,7 @@ function PosTerminal() {
   )
 }
 
-/* ------------------------------------------------------------------------
-   4 — CBT examinations: the candidate screen
-   ------------------------------------------------------------------------ */
+
 
 function ExamScreen() {
   const options: Array<[string, boolean]> = [
@@ -338,9 +318,7 @@ function ExamScreen() {
   )
 }
 
-/* ------------------------------------------------------------------------
-   5 — Wallets and exchange: balances and the book
-   ------------------------------------------------------------------------ */
+
 
 function ExchangeBook() {
   const points = [40, 46, 42, 52, 48, 58, 66, 62, 72, 68, 78, 74, 84, 90]
@@ -387,9 +365,7 @@ function ExchangeBook() {
   )
 }
 
-/* ------------------------------------------------------------------------
-   6 — The reconciliation ledger: two sides, matched
-   ------------------------------------------------------------------------ */
+
 
 function LedgerReconcile() {
   const states = ['ok', 'ok', 'ok', 'pending']
@@ -427,9 +403,7 @@ function LedgerReconcile() {
   )
 }
 
-/* ------------------------------------------------------------------------
-   7 — Identity: verification pipeline
-   ------------------------------------------------------------------------ */
+
 
 function IdentityCheck() {
   const checks: Array<[string, boolean]> = [
@@ -478,9 +452,7 @@ function IdentityCheck() {
   )
 }
 
-/* ------------------------------------------------------------------------
-   8 — Architecture: how a Newdich system is put together
-   ------------------------------------------------------------------------ */
+
 
 function Architecture() {
   const boxes: Array<[string, string, number]> = [
@@ -546,9 +518,7 @@ function Architecture() {
   )
 }
 
-/* ------------------------------------------------------------------------
-   9 — Newdich LAN: the territory coverage panel
-   ------------------------------------------------------------------------ */
+
 
 function LanCoverage() {
   const cx = 150

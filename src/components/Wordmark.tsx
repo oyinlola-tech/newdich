@@ -1,16 +1,4 @@
-/**
- * The footer nameplate — design.md, Footer.
- *
- * Set as SVG text with `textLength` so it fills its container exactly at every
- * width, from a 320px phone to a 1280px page, without a font-size clamp that
- * is only correct at one of them. `lengthAdjust="spacing"` opens and closes
- * the tracking to reach that width rather than stretching the glyphs, which is
- * what a stamped nameplate actually does.
- *
- * It is decorative: the company name is already stated in the legal rail
- * directly beneath it, so it is hidden from assistive technology rather than
- * read out twice.
- */
+
 export function Wordmark({ text }: { text: string }) {
   return (
     <svg

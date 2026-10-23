@@ -5,18 +5,7 @@ import { useEffect, useState } from 'react'
 
 import { Label } from '@/components/ui'
 
-/**
- * One column of the footer sitemap — design.md, Footer.
- *
- * Above 900px it is a plain ruled link list under a mono label. Below it, the
- * label becomes a real disclosure button, because eleven links per column
- * unstacked is a phone screen of nothing but links.
- *
- * It renders the desktop shape on the server, so a visitor with no JavaScript
- * gets every link at every width — the footer is this site's no-JavaScript
- * navigation and it is not allowed to swallow itself. The collapse is applied
- * on mount, once the media query can actually be read.
- */
+
 export function FooterGroup({
   name,
   links,

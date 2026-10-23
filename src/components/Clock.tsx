@@ -2,11 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-/**
- * Lagos time, tabular. It renders nothing until it has mounted: a clock that
- * ships a server-rendered time is a clock showing the build time, which is a
- * dead readout, and design.md would rather hide a readout than fake one.
- */
+
 export function Clock() {
   const [now, setNow] = useState<string | null>(null)
 

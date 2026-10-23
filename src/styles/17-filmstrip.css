@@ -1,14 +1,4 @@
-/* ==========================================================================
-   17 · Filmstrip                                          design.md — Gallery
 
-   An editorial character-card strip, after ThreeUI's character carousel.
-   Cards share a height and take their width from the photograph's own aspect
-   ratio, so a portrait and a landscape sit on the same rail without either
-   being cropped to match the other.
-
-   It never advances on its own. Every input — pointer, wheel, keyboard, card
-   focus — is a person moving it.
-   ========================================================================== */
 .film {
   border: 1px solid var(--line);
   border-radius: var(--r-3);
@@ -46,7 +36,7 @@
   background: transparent;
 }
 
-/* --- the rail ------------------------------------------------------------- */
+
 .film-rail {
   list-style: none;
   margin: 0;
@@ -58,8 +48,7 @@
   scroll-snap-type: x mandatory;
   background: var(--bg);
   cursor: grab;
-  /* The strip is a scroller, so it keeps its scrollbar — a horizontal list
-     with no visible way to scroll is a list that hides half of itself. */
+  
   scrollbar-width: thin;
   scrollbar-color: var(--line) transparent;
 }
@@ -90,7 +79,7 @@
   outline-offset: -2px
 }
 
-/* --- the card ------------------------------------------------------------- */
+
 .film-card {
   flex: none;
   scroll-snap-align: start;
@@ -153,9 +142,7 @@
   color: var(--text-2)
 }
 
-/* --------------------------------------------------------------------------
-   Responsive
-   -------------------------------------------------------------------------- */
+
 @media (max-width:900px) {
   .film-rail {
     padding: var(--s4);

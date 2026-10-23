@@ -1,8 +1,4 @@
-/**
- * The article renderer. Block types are closed — see src/data/insights.ts —
- * so a new kind of block is a deliberate addition here rather than arbitrary
- * markup arriving from the data layer.
- */
+
 
 import { anchor, type Block } from '@/data/insights'
 import { Art } from '@/lib/art'

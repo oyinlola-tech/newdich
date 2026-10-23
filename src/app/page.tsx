@@ -37,22 +37,13 @@ export const metadata = pageMeta({
 export default function HomePage() {
   return (
     <>
-      {/* --------------------------------------------------------------
-          The hero — design.md, Hero. Large type, a UI mockup and visible
-          borders: the statement runs the page at true hero scale, a ruled
-          rail states the figures under it, and the running instrument sits
-          beneath as a shelf spanning the page. An instrument panel is wide,
-          so the claim and the evidence read as one rack front rather than as
-          a sentence with a sidebar.
-          -------------------------------------------------------------- */}
+      
       <section className="hero hero--stack">
         <HeroArc />
         <div className="wrap">
-          {/* On a phone this block fills the viewport on its own, so the
-              statement and its two actions are the whole first screen and the
-              figures and the shelf are the reward for scrolling. */}
+          
           <div className="hero-view">
-            {/* A chip carrying a sentence of current state, not a tag. */}
+            
             <div className="hero-chip">
               <Pill state="live">
                 Two offices · Abuja and Okitipupa · building since {COMPANY.founded}
@@ -75,11 +66,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Four figures, each traceable to a fact about the company. The
-                logo wall a hero gallery would put here needs signed client
-                references, and design.md forbids inventing them. On a phone
-                this rail is what turns the first screen from a statement with
-                space under it into a screen with content in it. */}
+            
             <div className="hero-rail">
               <div>
                 <b>{COMPANY.founded}</b>
@@ -106,7 +93,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --- the capability matrix ---------------------------------------- */}
+      
       <section className="section section--alt">
         <div className="wrap">
           <Marker
@@ -132,7 +119,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --- the work index ----------------------------------------------- */}
+      
       <section className="section">
         <div className="wrap">
           <Marker label={`${CASES.length} systems`} note="Sector named, client not" />
@@ -164,10 +151,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --------------------------------------------------------------
-          The gallery — design.md, Gallery. An oversized headline ringed by
-          plates that hold still until the pointer arrives.
-          -------------------------------------------------------------- */}
+      
       <section className="section section--alt gallery">
         <div className="wrap">
           <Marker label="8 systems, drawn" note="No photography anywhere on this site" />
@@ -175,7 +159,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --- the practices index ------------------------------------------ */}
+      
       <section className="section">
         <div className="wrap">
           <Marker label="Seven practices" note="One construction, a different facet lit" />
@@ -198,7 +182,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --- the degradation strip ---------------------------------------- */}
+      
       <section className="section section--alt">
         <div className="wrap">
           <Degrade
@@ -223,7 +207,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --- platforms and the Institute ---------------------------------- */}
+      
       <section className="section">
         <div className="wrap">
           <Marker label="What we own and publish" note="MIT · Packagist · 12 territories" />

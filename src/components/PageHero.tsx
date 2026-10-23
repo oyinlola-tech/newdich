@@ -1,10 +1,4 @@
-/**
- * The page hero — every route that is not the home page.
- *
- * Breadcrumb, a mono label carrying data, the headline at display-xl, a lede,
- * and then — on a system page — the running instrument directly beneath.
- * Company pages pass their own spec or index as `children` instead.
- */
+
 
 import type { ReactNode } from 'react'
 

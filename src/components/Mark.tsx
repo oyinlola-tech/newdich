@@ -1,13 +1,4 @@
-/**
- * The mark. Measured off its 512x512 artboard: outer radius 116 (22.6%),
- * module 44 square with radius 12 (27.3%), gutter 14, one connector curve from
- * the top-left module to the bottom-right.
- *
- * The face carries the company's own logo gradient. It is the identity asset
- * rather than page decoration, and all three of its stops are blue — the
- * one-gradient rule in design.md governs what the site draws, not what the
- * company's mark already is.
- */
+
 export function Mark() {
   return (
     <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">

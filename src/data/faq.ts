@@ -1,8 +1,4 @@
-/**
- * Frequently asked questions, grouped. Answers are plain and specific; where
- * an answer depends on commercial terms the company must confirm, it says what
- * it depends on rather than inventing a number.
- */
+
 
 export type FaqGroup = {
   name: string

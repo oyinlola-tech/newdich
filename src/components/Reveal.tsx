@@ -2,11 +2,7 @@
 
 import { useEffect } from 'react'
 
-/**
- * Entry animation: fade + 6px translate, once, on the elements marked
- * [data-reveal]. Under prefers-reduced-motion the sheet already neutralises
- * the transform, so this only has to add the class.
- */
+
 export function Reveal() {
   useEffect(() => {
     document.documentElement.classList.add('js')
@@ -27,7 +23,7 @@ export function Reveal() {
         entries.forEach((entry, i) => {
           if (!entry.isIntersecting) return
           const el = entry.target as HTMLElement
-          /* 40ms between items, so a list cascades rather than flashing. */
+          
           window.setTimeout(() => el.classList.add('is-in'), i * 40)
           io.unobserve(el)
         })

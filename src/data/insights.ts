@@ -1,10 +1,4 @@
-/**
- * Insights — writing from the practice.
- *
- * Each article is a list of blocks. `p` and `ul` items may carry inline markup
- * (<strong>, <em>, <a>); it is authored copy in this repository, never user
- * input, and the article renderer sets it as HTML.
- */
+
 
 import { articleUrl } from '@/lib/routes'
 import type { ArtKey } from '@/lib/art'
