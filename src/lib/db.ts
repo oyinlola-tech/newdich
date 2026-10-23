@@ -61,6 +61,9 @@ const MIGRATIONS: Array<{ name: string; up: string }> = [
         experience_level ENUM('Absolute Beginner','Basic Computer Literacy','Intermediate','Advanced'),
         owns_laptop TINYINT(1), laptop_specs TEXT,
         track ENUM('Full-Stack Software Engineering','Frontend Application Development','Backend Architecture & Cloud Engineering','Mobile Application Engineering','Artificial Intelligence & Data Systems'),
+        course_id INT,
+        course_name VARCHAR(200),
+        course_price DECIMAL(12,2),
         study_mode ENUM('On-Campus','Virtual','Hybrid'),
         class_schedule ENUM('Weekday Morning Batch','Weekday Evening Batch','Weekend Batch'),
         heard_from ENUM('Social Media','Friend / Alumni Referral','Google Search / Institute Website','Event / Tech Workshop','Other'),
@@ -102,10 +105,42 @@ const MIGRATIONS: Array<{ name: string; up: string }> = [
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+      CREATE TABLE IF NOT EXISTS courses (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        name VARCHAR(200) NOT NULL,
+        description TEXT,
+        price DECIMAL(12,2) NOT NULL,
+        currency VARCHAR(10) DEFAULT 'NGN',
+        duration VARCHAR(100),
+        is_active TINYINT(1) DEFAULT 1,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+      CREATE TABLE IF NOT EXISTS settings (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        key VARCHAR(100) UNIQUE NOT NULL,
+        value TEXT NOT NULL,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `,
   },
   {
-    name: '002_session_columns',
+    name: '002_courses_seed',
+    up: `
+      INSERT IGNORE INTO courses (name, description, price, currency, duration) VALUES
+        ('Software Engineering', 'Full-stack software engineering training & certification', NULL, 'NGN', '1 Year (12 Months)'),
+        ('Data Science & AI', 'Machine learning, data pipelines & AI systems engineering', NULL, 'NGN', '1 Year (12 Months)'),
+        ('Cybersecurity', 'Network security, ethical hacking & security operations', NULL, 'NGN', '1 Year (12 Months)'),
+        ('Cloud & DevOps Engineering', 'Cloud architecture, CI/CD & infrastructure automation', NULL, 'NGN', '1 Year (12 Months)'),
+        ('Mobile App Development', 'Cross-platform iOS & Android development', NULL, 'NGN', '1 Year (12 Months)'),
+        ('UI/UX Design', 'User interface & user experience design', NULL, 'NGN', '6 Months'),
+        ('Digital Marketing', 'SEO, SEM, social media & digital strategy', NULL, 'NGN', '3 Months');
+    `,
+  },
+  {
+    name: '003_session_columns',
     up: `
       ALTER TABLE users ADD COLUMN IF NOT EXISTS session_token VARCHAR(255);
       ALTER TABLE users ADD COLUMN IF NOT EXISTS session_expires DATETIME;

@@ -2,8 +2,6 @@
 
 import Link from 'next/link'
 import { useState, useCallback } from 'react'
-import { Nav } from '@/components/Nav'
-import { Footer } from '@/components/Footer'
 
 type Section = 'steps' | 'form' | 'success'
 
@@ -81,7 +79,6 @@ export default function ApplySiwesPage() {
   if (section === 'steps') {
     return (
       <>
-        <Nav />
         <main style={{ padding: 'var(--s9) var(--gutter)' }}>
           <section className="section">
             <div className="wrap">
@@ -124,7 +121,6 @@ export default function ApplySiwesPage() {
             </div>
           </section>
         </main>
-        <Footer />
       </>
     )
   }
@@ -132,7 +128,6 @@ export default function ApplySiwesPage() {
   if (section === 'success') {
     return (
       <>
-        <Nav />
         <main style={{ padding: 'var(--s9) var(--gutter)' }}>
           <section className="section section--alt">
             <div className="wrap--narrow">
@@ -156,14 +151,12 @@ export default function ApplySiwesPage() {
             </div>
           </section>
         </main>
-        <Footer />
       </>
     )
   }
 
   return (
     <>
-      <Nav />
       <main style={{ padding: 'var(--s4) var(--gutter)', minHeight: '100vh' }}>
         <section className="section--flush-top section--flush-bottom">
           <div className="wrap--narrow">
@@ -352,7 +345,6 @@ export default function ApplySiwesPage() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   )
 }
