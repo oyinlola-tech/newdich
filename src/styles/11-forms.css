@@ -17,6 +17,15 @@
   border-color:var(--signal);background:var(--surface)}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5)}
 
+.input,.field input,.field select,.field textarea{
+  width:100%;min-height:46px;padding:var(--s3) var(--s4);
+  font-family:var(--body);font-size:.9375rem;color:var(--text);
+  background:var(--bg);border:1px solid var(--line);border-radius:var(--r-1);
+  transition:border-color var(--t-fast) var(--in),background var(--t-fast) var(--in);
+}
+.input:focus,.field input:focus,.field select:focus,.field textarea:focus{
+  border-color:var(--signal);background:var(--surface);outline:none
+}
 .field-err{font-size:.8125rem;color:var(--signal)}
 .field[data-invalid=true] input,.field[data-invalid=true] textarea,
 .field[data-invalid=true] select{border-color:var(--signal)}
